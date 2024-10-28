@@ -6,8 +6,8 @@ Track your classes, assignments, deadlines, study goals, schedules, and more. Th
 
 ## Tech Stack
 
-- **MongoDB**: NoSQL database for storing user data and application state.
-- **Express.js**: Web framework for building the server-side application.
-- **React**: Frontend library for building interactive user interfaces.
-- **Node.js**: JavaScript runtime for the backend server.
+- **MongoDB**
+- **Express.js**
+- **React**
+- **Node.js**
 
