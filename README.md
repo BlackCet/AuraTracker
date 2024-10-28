@@ -1,4 +1,4 @@
-# Campus College Tracker
+# Aura Tracker: Campusify
 
 A campus college tracker web app that gamifies academic life, making studying, attending lectures, completing projects, and participating in events engaging and rewarding.
 
