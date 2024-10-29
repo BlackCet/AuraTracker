@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-wrapper {
+  width: 100%;
+  transition: opacity 0.3s ease-in-out; /* Smooth transition */
+}
+
+form {
+  opacity: 1; /* Default opacity */
+  transition: opacity 0.5s ease-in-out; /* Smooth transition for forms */
+}
+
+form.hidden {
+  opacity: 0; /* Hide form */
+  height: 0; /* Collapse height when hidden */
+  overflow: hidden; /* Prevent overflow */
+}
