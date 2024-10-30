@@ -5,7 +5,7 @@ import { useCoursesContext } from "../hooks/useCoursesContext"
 import CourseDetails from "../components/CourseDetails"
 import CourseForm from "../components/CourseForm"
 
-const Home = () => {
+const Course = () => {
     const {courses, dispatch} = useCoursesContext()
 
     useEffect(() => {
@@ -33,4 +33,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Course
