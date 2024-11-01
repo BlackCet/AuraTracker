@@ -57,21 +57,21 @@ const CourseForm = () => {
             <h3>Add a New Course</h3>
 
             <label>Course Name:</label>
-            <input
+            <input className='bg-white'
                 type="text"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
             />
 
             <label>Units:</label>
-            <input
+            <input className='bg-white'
                 type="number"
                 onChange={(e) => setUnits(e.target.value)}
                 value={units}
             />
 
             <label>Credits:</label>
-            <input
+            <input className='bg-white'
                 type="number"
                 onChange={(e) => setCreditScore(e.target.value)}
                 value={creditScore}
