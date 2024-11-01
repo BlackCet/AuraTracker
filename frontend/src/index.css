@@ -1,6 +1,9 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 .form-wrapper {
   width: 100%;
@@ -17,3 +20,4 @@ form.hidden {
   height: 0; /* Collapse height when hidden */
   overflow: hidden; /* Prevent overflow */
 }
+

@@ -39,6 +39,7 @@ const RegisterForm = ({ onSwitch }) => {
             className={`border rounded w-full p-2 text-white ${errors.username ? 'border-red-500' : 'border-gray-300'}`} 
             {...register('username', { required: 'Username is required' })} 
           />
+          {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="email" className="block mb-2">Email</label>
@@ -48,6 +49,7 @@ const RegisterForm = ({ onSwitch }) => {
             className={`border rounded w-full p-2 text-white ${errors.email ? 'border-red-500' : 'border-gray-300'}`} 
             {...register('email', { required: 'Email is required' })} 
           />
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="password" className="block mb-2">Password</label>
@@ -57,6 +59,7 @@ const RegisterForm = ({ onSwitch }) => {
             className={`border rounded w-full p-2 text-white ${errors.password ? 'border-red-500' : 'border-gray-300'}`} 
             {...register('password', { required: 'Password is required' })} 
           />
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </div>
         <button 
           type="submit" 

@@ -1,0 +1,143 @@
+import React, { useState } from 'react';
+import { useAssignmentsContext } from "../hooks/useAssignmentsContext";
+import format from 'date-fns/format';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+
+const AssignmentDetails = ({ assignment }) => {
+    const { dispatch } = useAssignmentsContext();
+    const [isEditing, setIsEditing] = useState(false); // State to toggle edit form
+    const [title, setTitle] = useState(assignment.title);
+    const [description, setDescription] = useState(assignment.description);
+    const [deadline, setDeadline] = useState(assignment.deadline ? format(new Date(assignment.deadline), 'yyyy-MM-dd\'T\'HH:mm') : '');
+
+    const handleClick = async () => {
+        try {
+            const response = await fetch(`http://localhost:4001/api/assignments/${assignment._id}`, { 
+                method: 'DELETE'
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                dispatch({ type: 'DELETE_ASSIGNMENT', payload: json });
+            } else {
+                console.error('Failed to delete the assignment:', json); 
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
+
+    const toggleCompletion = async () => {
+        const updatedAssignment = { ...assignment, completed: !assignment.completed };
+
+        try {
+            const response = await fetch(`http://localhost:4001/api/assignments/${assignment._id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(updatedAssignment),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                dispatch({ type: 'UPDATE_ASSIGNMENT', payload: json });
+            } else {
+                console.error('Failed to update the assignment:', json);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        
+        const updatedAssignment = { title, description, deadline, completed: assignment.completed };
+
+        try {
+            const response = await fetch(`http://localhost:4001/api/assignments/${assignment._id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(updatedAssignment),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                dispatch({ type: 'UPDATE_ASSIGNMENT', payload: json });
+                setIsEditing(false); // Close form after update
+            } else {
+                console.error('Failed to update the assignment:', json);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
+
+    const createdAt = formatDistanceToNow(new Date(assignment.createdAt), { addSuffix: true });
+
+    return (
+        <div className="bg-white rounded shadow-md p-4 relative mb-4">
+            {isEditing ? (
+                // Edit form
+                <form onSubmit={handleUpdate}>
+                    <label>Title:</label>
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                        required
+                    />
+
+                    <label>Description:</label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                        required
+                    />
+
+                    <label>Deadline:</label>
+                    <input
+                        type="datetime-local"
+                        value={deadline}
+                        onChange={(e) => setDeadline(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                    />
+
+                    <button type="submit" className="bg-blue-500 text-white py-1 px-4 rounded mr-2">Save</button>
+                    <button type="button" onClick={() => setIsEditing(false)} className="bg-gray-500 text-white py-1 px-4 rounded">Cancel</button>
+                </form>
+            ) : (
+                // Display assignment details
+                <>
+                    <h4 className="text-lg font-semibold text-teal-500">{assignment.title}</h4>
+                    <p><strong>Description: </strong>{assignment.description}</p>
+                    <p><strong>Status: </strong>{assignment.completed ? "Completed" : "Incomplete"}</p>
+                    <label className="block mb-2">
+                        <input 
+                            type="checkbox" 
+                            checked={assignment.completed} 
+                            onChange={toggleCompletion} 
+                        />
+                        {assignment.completed ? ' Complete' : ' Incomplete'}
+                    </label>
+                    {assignment.deadline && (
+                        <p><strong>Due Date: </strong>{format(new Date(assignment.deadline), 'MMMM d, yyyy HH:mm')}</p>
+                    )}
+                    <p className="text-gray-500">Added {createdAt}</p>
+                    <button onClick={() => setIsEditing(true)} className=" my-1 bg-teal-500 hover:bg-teal-600 text-white py-1 px-4 rounded mr-2">Update</button>
+                    <span className="material-symbols-outlined cursor-pointer absolute top-4 right-4 hover:text-red-500" onClick={handleClick}>delete</span>
+                </>
+            )}
+        </div>
+    );
+};
+
+export default AssignmentDetails;

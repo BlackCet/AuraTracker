@@ -1,12 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; 
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import './index.css'; // If you have a CSS file for styles
+import './index.css'; 
+import {AssignmentsContextProvider } from './context/AssignmentsContext'; 
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
+const root = createRoot(document.getElementById('root')); 
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AssignmentsContextProvider>
+        <App />
+      </AssignmentsContextProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

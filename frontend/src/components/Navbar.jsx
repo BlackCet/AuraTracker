@@ -53,7 +53,7 @@ function Navbar({ toggleForm, isLogin }) { // Accept isLogin as a prop
                         </li>
                         <li>
                             <a
-                                href="#"
+                                href="/dashboard"
                                 className="text-gray-800 transform hover:text-teal-dark hover:scale-110 transition duration-200"
                             >
                                 Dashboard

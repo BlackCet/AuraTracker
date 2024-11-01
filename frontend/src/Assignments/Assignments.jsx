@@ -4,13 +4,14 @@ import Footer from '../components/Footer';
 import Assignments from '../components/Assignments';
 
 
-function Dashboard() {
+function Assignments() {
   return (
     <>
     <Navbar/>
+    <Assignments/>
     <Footer/>
     </>
   )
 }
 
-export default Dashboard;
+export default Assignments;
