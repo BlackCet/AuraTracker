@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { useCoursesContext } from "../hooks/useCoursesContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 // components
 import CourseDetails from "../components/CourseDetails"
@@ -7,19 +8,27 @@ import CourseForm from "../components/CourseForm"
 
 const Course = () => {
     const {courses, dispatch} = useCoursesContext()
+    const { user } = useAuthContext()
 
     useEffect(() => {
         const fetchCourses = async () => {
-            const response = await fetch('/api/course')
+            const response = await fetch('/api/course', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const json = await response.json()
 
             if (response.ok) {
                 dispatch({ type: 'SET_COURSES', payload: json })
             }
         }
+        
+        if(user){
+            fetchCourses()
+        }
 
-        fetchCourses()
-    }, [dispatch])
+    }, [dispatch, user])
 
     return (
         <div className="home">

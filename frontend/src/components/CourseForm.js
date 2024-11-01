@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useCoursesContext } from '../hooks/useCoursesContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const CourseForm = () => {
     const { dispatch } = useCoursesContext();
+    const { user } = useAuthContext();
 
     const [name, setName] = useState('');
     const [units, setUnits] = useState('');
@@ -11,6 +13,11 @@ const CourseForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!user){
+            setError('You must be logged in to add a course')
+            return 
+        }
 
         if (!name || !units || !creditScore) {
             setError('All fields are required');
@@ -25,6 +32,7 @@ const CourseForm = () => {
                 body: JSON.stringify(course),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
                 },
             });
 

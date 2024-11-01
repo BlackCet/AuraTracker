@@ -1,13 +1,24 @@
 import { useCoursesContext } from "../hooks/useCoursesContext";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { useAuthContext } from "../hooks/useAuthContext";
+
 
 const CourseDetails = ({ course }) => {
     const { dispatch } = useCoursesContext();
+    const { user } = useAuthContext();
 
     const handleClick = async () => {
+
+        if(!user){
+            return
+        }
+
         try {
             const response = await fetch('/api/course/' + course._id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                },
             });
 
             const json = await response.json();

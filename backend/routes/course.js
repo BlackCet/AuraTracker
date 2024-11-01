@@ -1,6 +1,9 @@
 const express = require('express');
 const { createCourse, getCourses, getCourse, deleteCourse, updateCourse } = require('../controllers/courseController');
 const router = express.Router();
+const requireAuth = require('../middleware/requireAuth');
+
+router.use(requireAuth);
 
 // GET all courses
 router.get('/', getCourses);

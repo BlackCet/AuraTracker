@@ -7,7 +7,7 @@ const Dashboard = () => {
             <h1>Welcome to your Dashboard</h1>
             <div className="card-container">
                 <div className="card">
-                    <Link to="/">
+                    <Link to="/course">
                         <h3>Courses</h3>
                         <p>See all your courses here</p>
                     </Link>
