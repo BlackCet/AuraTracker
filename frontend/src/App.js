@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Assignments from "./pages/Assignments";
 
 function App() {
   const { user } = useAuthContext()
@@ -23,6 +24,7 @@ function App() {
             <Route path="/dashboard" element={user ? <Dashboard />: <Navigate to="/login" />} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/dashboard" />} />
+            <Route path="/assignments" element={user ? <Assignments /> : <Navigate to="/login" />} />
           </Routes>
         </div>
         <Footer />
