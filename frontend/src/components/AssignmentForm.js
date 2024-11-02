@@ -56,7 +56,7 @@ const AssignmentForm = () => {
 
     return (
         <form className="bg-white p-6 rounded shadow-md" onSubmit={handleSubmit}>
-            <h3 className="text-xl font-semibold mb-4">Add New Assignment</h3>
+            <h3 className="text-teal-dark text-xl font-bold mb-4">Add New Assignment</h3>
 
             <label className="block mb-2">Title:</label>
             <input

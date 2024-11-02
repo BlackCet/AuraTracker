@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Assignments from "./pages/Assignments";
+import Events from "./pages/Events";
 
 function App() {
   const { user } = useAuthContext()
@@ -25,6 +26,7 @@ function App() {
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/dashboard" />} />
             <Route path="/assignments" element={user ? <Assignments /> : <Navigate to="/login" />} />
+            <Route path="/schedule" element={user ? <Events/> : <Navigate to="/schedule" />} />
           </Routes>
         </div>
         <Footer />

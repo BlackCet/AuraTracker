@@ -8,7 +8,7 @@ const AssignmentList = () => {
 
     return (
         <div className="p-4 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4">Assignment Details</h2>
+            <h2 className="text-teal-dark text-xl font-bold mb-4">Assignment Details</h2>
             {assignments.length > 0 ? (
                 assignments.map(assignment => (
                     <AssignmentDetails key={assignment._id} assignment={assignment} />

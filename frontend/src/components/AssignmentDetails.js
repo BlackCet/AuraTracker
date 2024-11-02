@@ -14,12 +14,12 @@ const AssignmentDetails = ({ assignment }) => {
 
     const handleClick = async () => {
 
-        if(!user){
+        if (!user) {
             return
         }
 
         try {
-            const response = await fetch(`/api/assignments/${assignment._id}`, { 
+            const response = await fetch(`/api/assignments/${assignment._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
@@ -31,7 +31,7 @@ const AssignmentDetails = ({ assignment }) => {
             if (response.ok) {
                 dispatch({ type: 'DELETE_ASSIGNMENT', payload: json });
             } else {
-                console.error('Failed to delete the assignment:', json); 
+                console.error('Failed to delete the assignment:', json);
             }
         } catch (error) {
             console.error('An error occurred:', error);
@@ -39,7 +39,7 @@ const AssignmentDetails = ({ assignment }) => {
     };
 
     const toggleCompletion = async () => {
-        if(!user){
+        if (!user) {
             return
         }
         const updatedAssignment = { ...assignment, completed: !assignment.completed };
@@ -69,10 +69,10 @@ const AssignmentDetails = ({ assignment }) => {
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        if(!user){
+        if (!user) {
             return
         }
-        
+
         const updatedAssignment = { title, description, deadline, completed: assignment.completed };
 
         try {
@@ -82,7 +82,7 @@ const AssignmentDetails = ({ assignment }) => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`,
-                    
+
                 },
             });
 
@@ -111,7 +111,7 @@ const AssignmentDetails = ({ assignment }) => {
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                        className="w-full p-2 border border-gray-300 rounded mb-4 bg-gray-100" // Light background
                         required
                     />
 
@@ -119,7 +119,7 @@ const AssignmentDetails = ({ assignment }) => {
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                        className="w-full p-2 border border-gray-300 rounded mb-4 bg-gray-100" // Light background
                         required
                     />
 
@@ -128,10 +128,10 @@ const AssignmentDetails = ({ assignment }) => {
                         type="datetime-local"
                         value={deadline}
                         onChange={(e) => setDeadline(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded mb-4"
+                        className="w-full p-2 border border-gray-300 rounded mb-4 bg-gray-100" // Light background
                     />
 
-                    <button type="submit" className="bg-blue-500 text-white py-1 px-4 rounded mr-2">Save</button>
+                    <button type="submit" className="bg-teal-light text-white py-1 px-4 rounded mr-2">Save</button>
                     <button type="button" onClick={() => setIsEditing(false)} className="bg-gray-500 text-white py-1 px-4 rounded">Cancel</button>
                 </form>
             ) : (
@@ -141,10 +141,10 @@ const AssignmentDetails = ({ assignment }) => {
                     <p><strong>Description: </strong>{assignment.description}</p>
                     <p><strong>Status: </strong>{assignment.completed ? "Completed" : "Incomplete"}</p>
                     <label className="block mb-2">
-                        <input 
-                            type="checkbox" 
-                            checked={assignment.completed} 
-                            onChange={toggleCompletion} 
+                        <input
+                            type="checkbox"
+                            checked={assignment.completed}
+                            onChange={toggleCompletion}
                         />
                         {assignment.completed ? ' Complete' : ' Incomplete'}
                     </label>

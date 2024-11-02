@@ -5,21 +5,28 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {signup, isLoading, error} = useSignup()
+    const { signup, isLoading, error } = useSignup();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-    
-        await signup(username, email, password)
-      }
+        e.preventDefault();
+        // Basic validation
+        if (!username || !email || !password) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        try {
+            await signup(username, email, password);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <div className="bg-gray-100 flex items-center justify-center min-h-screen" style={{ color: "black" }}>
             <section className="bg-light-gray px-6 py-20 mx-4 w-full flex flex-col md:flex-row justify-center items-center">
                 <div className="md:w-1/2 mx-5 flex flex-col justify-center items-center text-center md:text-left">
-                    <h1 className="text-3xl text-teal-dark md:text-4xl font-bold my-6">
-                        Campusify
-                    </h1>
+                    <h1 className="text-3xl text-teal-dark md:text-4xl font-bold my-6">Campusify</h1>
                     <p className="text-gray-700 mb-6">
                         Transform your college journey into a rewarding adventure with
                         gamified learning, social connections, and goal tracking—all in one
