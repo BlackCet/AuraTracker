@@ -10,7 +10,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Assignments from "./pages/Assignments";
 import Events from "./pages/Events";
-
+import About from "./pages/About";
 function App() {
   const { user } = useAuthContext()
   
@@ -27,6 +27,7 @@ function App() {
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/dashboard" />} />
             <Route path="/assignments" element={user ? <Assignments /> : <Navigate to="/login" />} />
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/schedule" />} />
+            <Route path="/about" element={user ? <About/> : <Navigate to="/login" />} />
           </Routes>
         </div>
         <Footer />
