@@ -1,0 +1,25 @@
+.desc{
+    font-size: 240;
+    font-style: oblique;
+    color: #E2F1E7;
+    font-weight: 600;
+    text-align: center;
+    background-color: #387478;
+}
+.head{
+    font-weight: 700;
+    color: #243642;
+    text-decoration: underline;
+    background-color: #E2F1E7;
+}
+.whole{
+    border-left: black;
+    border-right: black;
+    border-top: black;
+    border-radius: 200;
+    border-width: 1px;
+    display: flexbox;
+    margin-left: 20px;
+    text-align: center;
+    margin-left: 20px;
+}
