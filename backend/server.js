@@ -2,8 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const userRoutes = require("./routes/user"); // Assuming you have user routes
+const userRoutes = require("./routes/user"); 
 const assignmentRoutes = require('./routes/assignment');
+const eventRoutes = require('./routes/event');
 
 // Load environment variables
 dotenv.config();
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/assignments", assignmentRoutes);
+app.use("/api/events", eventRoutes);
 
 // Connect to MongoDB
 mongoose
