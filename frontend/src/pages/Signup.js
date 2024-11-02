@@ -1,36 +1,37 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn"; // Import the Google Sign-In hook
+import { GoogleLogin } from '@react-oauth/google'; // Import Google Login component if using a library
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {signup, isLoading, error} = useSignup()
+    const { signup, isLoading, error } = useSignup();
+    const { googleSignIn, isLoading: googleLoading, error: googleError } = useGoogleSignIn(); // Use the Google Sign-In hook
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-    
-        await signup(username, email, password)
-      }
+        e.preventDefault();
+        await signup(username, email, password);
+    };
+
+    const handleGoogleSuccess = async (response) => {
+        const { credential } = response; // Extract the credential (token ID) from the response
+        await googleSignIn(credential); // Call the googleSignIn function with the token
+    };
+
+    const handleGoogleFailure = (response) => {
+        console.error("Google Sign-In failed:", response);
+    };
 
     return (
         <div className="bg-gray-100 flex items-center justify-center min-h-screen" style={{ color: "black" }}>
             <section className="bg-light-gray px-6 py-20 mx-4 w-full flex flex-col md:flex-row justify-center items-center">
                 <div className="md:w-1/2 mx-5 flex flex-col justify-center items-center text-center md:text-left">
-                    <h1 className="text-3xl text-teal-dark md:text-4xl font-bold my-6">
-                        Campusify
-                    </h1>
-                    <p className="text-gray-700 mb-6">
-                        Transform your college journey into a rewarding adventure with
-                        gamified learning, social connections, and goal tracking—all in one
-                        place.
-                    </p>
+                    <h1 className="text-3xl text-teal-dark md:text-4xl font-bold my-6">Campusify</h1>
+                    <p className="text-gray-700 mb-6">Transform your college journey into a rewarding adventure with gamified learning, social connections, and goal tracking—all in one place.</p>
                     <div className="border-b-2 border-gray-300 my-4 mx-1"></div>
-                    <p className="mb-4">
-                        Stay on top of classes, assignments, and deadlines while earning
-                        rewards, connecting with peers, and making every achievement count.
-                        Dive into a vibrant community where learning meets fun!
-                    </p>
+                    <p className="mb-4">Stay on top of classes, assignments, and deadlines while earning rewards, connecting with peers, and making every achievement count. Dive into a vibrant community where learning meets fun!</p>
                 </div>
                 <div className="md:w-1/2 mb-4 mx-1 md:mt-0 flex justify-center items-center mt-8 md:mt-0">
                     <div className="form-wrapper w-full max-w-sm bg-white p-8 rounded shadow-md">
@@ -62,6 +63,17 @@ const Signup = () => {
                             </button>
                             {error && <p className="text-red-500">{error}</p>}
                         </form>
+                        {/* Google Sign-In Button */}
+                        <div className="mt-4">
+                            <GoogleLogin
+                                onSuccess={handleGoogleSuccess} // Ensure the prop is named correctly
+                                onFailure={handleGoogleFailure} // Ensure the prop is named correctly
+                                logoAlignment="left" // Align the logo to the left (optional)
+                                style={{ width: '100%' }} // Make the button full width
+                                disabled={googleLoading}
+                            />
+                            {googleError && <p className="text-red-500">{googleError}</p>}
+                        </div>
                     </div>
                 </div>
             </section>
