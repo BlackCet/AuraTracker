@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn"; // Import the Google Sign-In hook
+import { GoogleLogin } from '@react-oauth/google'; // Import Google Login component if using a library
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {login, error, isLoading} = useLogin();
+    const { googleSignIn, isLoading: googleLoading, error: googleError } = useGoogleSignIn(); // Use the Google Sign-In hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         
         await login(email, password)
+    };
+
+    const handleGoogleSuccess = async (response) => {
+        const { credential } = response; // Extract the credential (token ID) from the response
+        await googleSignIn(credential); // Call the googleSignIn function with the token
+    };
+
+    const handleGoogleFailure = (response) => {
+        console.error("Google Sign-In failed:", response);
     };
 
     return (
@@ -54,6 +66,17 @@ const Login = () => {
                             </button>
                             {error && <p className="text-red-500 mt-4">{error}</p>}
                         </form>
+                        {/* Google Sign-In Button */}
+                        <div className="mt-4">
+                            <GoogleLogin
+                                onSuccess={handleGoogleSuccess} // Ensure the prop is named correctly
+                                onFailure={handleGoogleFailure} // Ensure the prop is named correctly
+                                logoAlignment="left" // Align the logo to the left (optional)
+                                style={{ width: '100%' }} // Make the button full width
+                                disabled={googleLoading}
+                            />
+                            {googleError && <p className="text-red-500">{googleError}</p>}
+                        </div>
                     </div>
                 </div>
             </section>
