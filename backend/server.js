@@ -10,6 +10,7 @@ const courseRoutes = require('./routes/course')
 const assignmentRoutes = require('./routes/assignment')
 const eventRoutes = require('./routes/event')
 const authRoutes = require('./routes/authRoutes')
+require('./scheduler/assignmentsScheduler')
 
 //create an express app
 const app = express()
