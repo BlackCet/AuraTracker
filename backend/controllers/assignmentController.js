@@ -1,5 +1,6 @@
 const Assignment = require('../models/assignmentModel');
 const mongoose = require('mongoose');
+const User = require('../models/userModel');
 
 // Get all assignments
 const getAssignments = async (req, res) => {
@@ -79,6 +80,18 @@ const updateAssignment = async (req, res) => {
     if (deadline) updateData.deadline = deadline;
 
     try {
+        const currentAssignment = await Assignment.findById(id);
+
+        // Check if we're marking this assignment as completed
+        if (!currentAssignment.completed && completed) {
+            // Increment user points if the assignment was not previously completed
+            await User.findByIdAndUpdate(
+                req.user._id,
+                { $inc: { points: 10 } }, // Increment points by 10
+                { new: true }
+            );
+        }
+
         const updatedAssignment = await Assignment.findByIdAndUpdate(
             id,
             updateData,

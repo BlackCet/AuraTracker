@@ -23,6 +23,10 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         sparse: true // Allows null values while enforcing uniqueness
+    },
+    points: {
+        type: Number,
+        default: 0 // Initialize points to zero
     }
 });
 
