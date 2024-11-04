@@ -14,7 +14,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 router.post('/google/callback', async (req, res) => {
     const { token } = req.body;
 
-    console.log("Received token:", token); // Log received token
+    // console.log("Received token:", token); // Log received token
 
     try {
         // Verify the Google token
@@ -24,7 +24,7 @@ router.post('/google/callback', async (req, res) => {
         });
         
         const payload = ticket.getPayload();
-        console.log("Token payload:", payload); // Log token payload details
+        // console.log("Token payload:", payload); // Log token payload details
 
         const { email, sub: googleId, name: username } = payload;
 

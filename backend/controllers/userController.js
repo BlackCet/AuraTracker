@@ -12,7 +12,12 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.login(email, password);
         const token = createToken(user._id);
-        res.status(200).json({ email, token });
+        res.status(200).json({ 
+            email: user.email,
+            username: user.username,
+            points: user.points,
+            token 
+        });
     } catch (error) {
         console.error('Login Error:', error.message); // Log error for debugging
         res.status(400).json({ error: error.message });
@@ -25,7 +30,12 @@ const signupUser = async (req, res) => {
     try {
         const user = await User.signup(email, password, username);
         const token = createToken(user._id);
-        res.status(201).json({ email, token }); // Use 201 status for resource creation
+        res.status(201).json({ 
+            email: user.email,
+            username: user.username,
+            points: user.points,
+            token 
+        }); // Use 201 status for resource creation
     } catch (error) {
         console.error('Signup Error:', error.message); // Log error for debugging
         res.status(400).json({ error: error.message });
