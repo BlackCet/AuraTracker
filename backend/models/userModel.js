@@ -115,6 +115,4 @@ userSchema.statics.loginWithGoogle = async function(googleId, email, username) {
     return user;
 };
 
-
-
 module.exports = mongoose.model('User', userSchema);

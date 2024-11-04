@@ -42,4 +42,15 @@ const signupUser = async (req, res) => {
     }
 };
 
-module.exports = { loginUser, signupUser };
+//to get user data
+const getUserData = async (req, res) => {
+    try {
+        const { _id, username, email, points } = req.user; // Destructure the required fields
+        res.status(200).json({ _id, username, email, points }); // Send the desired fields in the response
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+};
+
+module.exports = { loginUser, signupUser, getUserData };

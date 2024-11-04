@@ -1,8 +1,9 @@
 // Initialize express router
 const express = require('express')
+const requireAuth = require('../middleware/requireAuth')
 
 //controller functions
-const { signupUser, loginUser } = require('../controllers/userController')
+const { signupUser, loginUser, getUserData } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -11,5 +12,8 @@ router.post('/login', loginUser)
 
 //signup route
 router.post('/signup', signupUser)
+
+//get user data route
+router.get('/me',requireAuth, getUserData)
 
 module.exports = router
