@@ -12,6 +12,7 @@ import Assignments from "./pages/Assignments";
 import Events from "./pages/Events";
 import About from "./pages/About";
 import Profiles from "./pages/Profiles";
+import Team from "./pages/Team";
 
 function App() {
   const { user } = useAuthContext()
@@ -31,6 +32,8 @@ function App() {
             <Route path="/assignments" element={user ? <Assignments /> : <Navigate to="/login" />} />
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/schedule" />} />
             <Route path="/about" element={<About />} />
+            <Route path="/team" element={<Team />} />
+
           </Routes>
         </div>
         <Footer />
