@@ -6,6 +6,7 @@ import { CoursesContextProvider } from "./context/coursesContext";
 import { AuthContextProvider } from "./context/authContext";
 import { AssignmentsContextProvider } from "./context/AssignmentsContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { EventContextProvider } from "./context/EventContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,9 +14,11 @@ root.render(
     <AuthContextProvider>
     <CoursesContextProvider>
     <AssignmentsContextProvider>
+    <EventContextProvider>
     <GoogleOAuthProvider clientId="646626177801-4g39k4q77ip2oe1hdamdfqijkbgmmfor.apps.googleusercontent.com">
       <App />
     </GoogleOAuthProvider>
+    </EventContextProvider>
     </AssignmentsContextProvider>
     </CoursesContextProvider>
     </AuthContextProvider>    
