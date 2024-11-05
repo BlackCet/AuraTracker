@@ -9,6 +9,7 @@ const dashboardRoutes = require('./routes/dashboard')
 const courseRoutes = require('./routes/course')
 const assignmentRoutes = require('./routes/assignment')
 const eventRoutes = require('./routes/event')
+const profileRoutes = require('./routes/profile')
 const authRoutes = require('./routes/authRoutes')
 require('./scheduler/assignmentsScheduler')
 
@@ -30,6 +31,7 @@ app.use('/api/course', courseRoutes)
 app.use('/api/assignments', assignmentRoutes)
 app.use("/api/events", eventRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/profiles', profileRoutes);
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
