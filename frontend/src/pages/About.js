@@ -3,9 +3,10 @@ import React from 'react';
 function About() {
     return (
         <>
+        <div className="Features">
             <div className="hero bg-base-200 py-10">
                 <div className="hero-content text-center">
-                    <div className="max-w-xl">
+                    <div className="Desc max-w-xl">
                         <h2 className="text-4xl font-bold mb-5">Aura Tracker: Campusify</h2>
                         <p className="text-lg mb-5">
                             We believe that studying doesn’t have to be tedious—it can be motivating, interactive, and even gameful. Our platform combines the power of goal setting, progress tracking, and game-like elements to help you stay motivated and achieve your academic goals.
@@ -26,7 +27,7 @@ function About() {
                     {data.map((item, index) => (
                         <div key={index} className="carousel-item">
                             <div className="card w-full bg-base-100 shadow-xl">
-                                <div className="card-body">
+                                <div className="Cards card-body">
                                     <h3 className="card-title text-xl font-bold">{item.head}</h3>
                                     <p className="text-gray-700 mt-2">{item.desc}</p>
                                 </div>
@@ -34,6 +35,7 @@ function About() {
                         </div>
                     ))}
                 </div>
+            </div>
             </div>
         </>
     );
