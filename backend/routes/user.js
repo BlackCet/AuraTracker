@@ -3,7 +3,7 @@ const express = require('express')
 const requireAuth = require('../middleware/requireAuth')
 
 //controller functions
-const { signupUser, loginUser, getUserData } = require('../controllers/userController')
+const { signupUser, loginUser, getUserData, getLeaderboard } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -15,5 +15,8 @@ router.post('/signup', signupUser)
 
 //get user data route
 router.get('/me',requireAuth, getUserData)
+
+//get the leaderboard route
+router.get('/leaderboard', requireAuth, getLeaderboard)
 
 module.exports = router

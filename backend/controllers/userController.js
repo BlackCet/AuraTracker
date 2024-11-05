@@ -53,6 +53,16 @@ const getUserData = async (req, res) => {
     }
 };
 
+//to get the user info for leaderboard
+const getLeaderboard = async (req, res) => {
+    try {
+        const users = await User.find({ points: { $gt: 0 } }) // Fetch users with more than 10 points
+        .sort({ points: -1 })
+        .select('username points'); // Fetches users with username and points only
+          res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching leaderboard", error });
+    }
+  };
 
-
-module.exports = { loginUser, signupUser, getUserData };
+module.exports = { loginUser, signupUser, getUserData, getLeaderboard };
