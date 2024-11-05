@@ -1,11 +1,16 @@
+// eventRoutes.js
 const express = require('express');
-const router = express.Router();
 const {
     getAllEvents,
     createEvent,
     updateEvent,
     deleteEvent,
 } = require('../controllers/eventController');
+const router = express.Router();
+const requireAuth = require('../middleware/requireAuth');
+
+// Protect all routes with requireAuth middleware
+router.use(requireAuth);
 
 // GET all events
 router.get('/', getAllEvents);

@@ -1,44 +1,55 @@
-
-// Add necessary imports
+// Event.jsx
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useEventContext } from '../hooks/useEventContext';
 
 const Event = () => {
-  const [events, setEvents] = useState([]);
+  const { user } = useAuthContext();
+  const { events, dispatch } = useEventContext();
   const [modalOpen, setModalOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [title, setTitle] = useState('');
 
-  // Fetch events from the server
   useEffect(() => {
     const fetchEvents = async () => {
+      if (!user) {
+        alert('Please log in to view your events.');
+        return;
+      }
+
       try {
-        const res = await axios.get('/api/events');
-        const eventsWithIds = res.data.map(event => ({
+        const response = await axios.get('/api/events', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        const eventsWithIds = response.data.map(event => ({
           ...event,
           id: event._id,
         }));
-        setEvents(eventsWithIds);
+
+        dispatch({ type: 'SET_EVENTS', payload: eventsWithIds });
       } catch (error) {
         console.error('Error fetching events:', error);
-        alert('Failed to fetch events. Please try again later.');
+        alert('Failed to fetch events. Please check your authentication and try again.');
       }
     };
-    fetchEvents();
-  }, []);
 
-  // Handle date click to create a new event
+    fetchEvents();
+  }, [user, dispatch]);
+
   const handleDateClick = (arg) => {
     setTitle('');
     setCurrentEvent({ start: arg.dateStr, end: arg.dateStr });
     setModalOpen(true);
   };
 
-  // Handle event click to edit or delete an existing event
   const handleEventClick = (clickInfo) => {
     const { event } = clickInfo;
     setTitle(event.title);
@@ -50,25 +61,29 @@ const Event = () => {
     setModalOpen(true);
   };
 
-  // Save or update an event
   const saveEvent = async () => {
     const newEvent = {
       title,
       start: currentEvent.start,
       end: currentEvent.end,
+      user_id: user.id,
     };
 
     try {
       if (currentEvent.id) {
-        // Update existing event
-        const res = await axios.patch(`/api/events/${currentEvent.id}`, newEvent);
-        setEvents((prevEvents) =>
-          prevEvents.map((event) => (event._id === currentEvent.id ? res.data : event))
-        );
+        const res = await axios.patch(`/api/events/${currentEvent.id}`, newEvent, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        dispatch({ type: 'UPDATE_EVENT', payload: res.data });
       } else {
-        // Create new event
-        const res = await axios.post('/api/events', newEvent);
-        setEvents((prevEvents) => [...prevEvents, res.data]);
+        const res = await axios.post('/api/events', newEvent, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        dispatch({ type: 'ADD_EVENT', payload: res.data });
       }
       setModalOpen(false);
     } catch (error) {
@@ -77,12 +92,15 @@ const Event = () => {
     }
   };
 
-  // Handle event delete
   const handleEventDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       try {
-        await axios.delete(`/api/events/${id}`);
-        setEvents((prevEvents) => prevEvents.filter((event) => event._id !== id));
+        await axios.delete(`/api/events/${id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        dispatch({ type: 'DELETE_EVENT', payload: id });
       } catch (error) {
         console.error('Error deleting event:', error);
         alert('Failed to delete event. Please try again.');
@@ -104,7 +122,6 @@ const Event = () => {
         />
       </div>
 
-      {/* Modal for adding/editing events */}
       {modalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="modal modal-open bg-black bg-opacity-50">
