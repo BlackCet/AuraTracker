@@ -53,4 +53,6 @@ const getUserData = async (req, res) => {
     }
 };
 
+
+
 module.exports = { loginUser, signupUser, getUserData };

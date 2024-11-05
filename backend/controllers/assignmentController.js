@@ -36,7 +36,7 @@ const createAssignment = async (req, res) => {
 
     try {
         const user_id = req.user._id;
-        const existingAssignment = await Assignment.findOne({ title });
+        const existingAssignment = await Assignment.findOne({ title, user_id });
         if (existingAssignment) {
             return res.status(409).json({ message: "An assignment with this title already exists." });
         }
