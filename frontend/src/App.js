@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Assignments from "./pages/Assignments";
 import Events from "./pages/Events";
 import About from "./pages/About";
+
 function App() {
   const { user } = useAuthContext()
   
