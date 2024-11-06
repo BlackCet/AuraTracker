@@ -40,10 +40,10 @@ const AssignmentDetails = ({ assignment }) => {
 
     const toggleCompletion = async () => {
         if (!user) {
-            return
+            return;
         }
         const updatedAssignment = { ...assignment, completed: !assignment.completed };
-
+    
         try {
             const response = await fetch(`/api/assignments/${assignment._id}`, {
                 method: 'PATCH',
@@ -53,11 +53,30 @@ const AssignmentDetails = ({ assignment }) => {
                     'Authorization': `Bearer ${user.token}`,
                 },
             });
-
+    
             const json = await response.json();
-
+    
             if (response.ok) {
                 dispatch({ type: 'UPDATE_ASSIGNMENT', payload: json });
+    
+                // Fetch updated points from /api/user/me after marking completion
+                const userResponse = await fetch('/api/user/me', {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`,
+                    },
+                });
+                const userData = await userResponse.json();
+    
+                // Display the alert with the updated points
+                if (userResponse.ok) {
+                    if (updatedAssignment.completed) {
+                        alert(`Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}`);
+                    } else {
+                        alert(`Assignment marked as incomplete. Points removed. Current points: ${userData.points}`);
+                    }
+                } else {
+                    console.error('Failed to fetch user data:', userData);
+                }
             } else {
                 console.error('Failed to update the assignment:', json);
             }
@@ -65,6 +84,7 @@ const AssignmentDetails = ({ assignment }) => {
             console.error('An error occurred:', error);
         }
     };
+    
 
     const handleUpdate = async (e) => {
         e.preventDefault();
