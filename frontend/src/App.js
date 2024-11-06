@@ -14,6 +14,7 @@ import About from "./pages/About";
 import Profiles from "./pages/Profiles";
 import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
+import Goals from "./pages/AcademicGoals";
 
 function App() {
   const { user } = useAuthContext()
@@ -35,6 +36,7 @@ function App() {
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/goals" element={<Goals/>} />
           </Routes>
         </div>
         <Footer />
