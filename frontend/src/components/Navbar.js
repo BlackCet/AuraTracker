@@ -46,7 +46,7 @@ const Navbar = () => {
                     {user ? (
                         <>
                             {/* User Email Display */}
-                            <span className="text-gray-800">{user.email}</span>
+                            <span className="text-gray-800">Username: {user.username}</span>
 
                             {/* Logout Button */}
                             <button
