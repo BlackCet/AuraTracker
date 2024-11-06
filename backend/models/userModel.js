@@ -23,6 +23,14 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         sparse: true // Allows null values while enforcing uniqueness
+    },
+    points: {
+        type: Number,
+        default: 0 // Initialize points to zero
+    },
+    profilePicture: {
+        type: String,
+        default: "defaultProfilePic.png" // Default to empty string if no profile picture is provided
     }
 });
 
@@ -110,7 +118,5 @@ userSchema.statics.loginWithGoogle = async function(googleId, email, username) {
     user = await this.create({ googleId, email, username });
     return user;
 };
-
-
 
 module.exports = mongoose.model('User', userSchema);
