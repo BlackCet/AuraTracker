@@ -13,6 +13,7 @@ import Events from "./pages/Events";
 import About from "./pages/About";
 import Profiles from "./pages/Profiles";
 import Leaderboard from "./pages/Leaderboard";
+import Team from "./pages/Team";
 
 function App() {
   const { user } = useAuthContext()
@@ -33,6 +34,7 @@ function App() {
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/login" />} />
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
+            <Route path="/team" element={<Team />} />
           </Routes>
         </div>
         <Footer />
