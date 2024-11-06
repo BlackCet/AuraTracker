@@ -27,10 +27,12 @@ const userSchema = new Schema({
     points: {
         type: Number,
         default: 0 // Initialize points to zero
+
     },
     profilePicture: {
         type: String,
         default: "defaultProfilePic.png" // Default to empty string if no profile picture is provided
+
     }
 });
 

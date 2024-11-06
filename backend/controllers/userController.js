@@ -12,6 +12,7 @@ const loginUser = async (req, res) => {
     try {
         const user = await User.login(email, password);
         const token = createToken(user._id);
+
         res.status(200).json({
             user, // Return the full user object
             token
@@ -28,26 +29,45 @@ const signupUser = async (req, res) => {
     try {
         const user = await User.signup(email, password, username);
         const token = createToken(user._id);
+
         res.status(201).json({
             user, // Return the full user object
             token
         });
+
     } catch (error) {
         console.error('Signup Error:', error.message);
         res.status(400).json({ error: error.message });
     }
 };
 
+
 // Get user data
 const getUserData = async (req, res) => {
     try {
         const user = req.user;
         res.status(200).json(user); // Return full user data
+
     } catch (error) {
         console.error('Error fetching user data:', error);
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+
+//to get the user info for leaderboard
+const getLeaderboard = async (req, res) => {
+    try {
+        const users = await User.find({ points: { $gt: 0 } }) // Fetch users with more than 10 points
+        .sort({ points: -1 })
+        .select('username points'); // Fetches users with username and points only
+          res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching leaderboard", error });
+    }
+  };
+
+module.exports = { loginUser, signupUser, getUserData, getLeaderboard };
 
 // Update user profile
 const updateUser = async (req, res) => {
@@ -76,3 +96,4 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = { loginUser, signupUser, getUserData, updateUser };
+
