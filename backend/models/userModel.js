@@ -31,7 +31,14 @@ const userSchema = new Schema({
     profilePicture: {
         type: String,
         default: "defaultProfilePic.png" // Default to empty string if no profile picture is provided
+    }, 
+    assignmentsCompleted: { 
+        type: Number, default: 0 
+    }, 
+    badges: {
+         type: [String], default: [] 
     }
+    
 });
 
 
