@@ -67,7 +67,6 @@ const getLeaderboard = async (req, res) => {
     }
   };
 
-module.exports = { loginUser, signupUser, getUserData, getLeaderboard };
 
 // Update user profile
 const updateUser = async (req, res) => {
@@ -95,5 +94,5 @@ const updateUser = async (req, res) => {
     }
 };
 
-module.exports = { loginUser, signupUser, getUserData, updateUser };
+module.exports = { loginUser, signupUser, getUserData, updateUser,  getLeaderboard };
 
