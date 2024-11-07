@@ -13,6 +13,7 @@ const AssignmentDetails = ({ assignment }) => {
     const [description, setDescription] = useState(assignment.description);
     const [deadline, setDeadline] = useState(assignment.deadline ? format(new Date(assignment.deadline), 'yyyy-MM-dd\'T\'HH:mm') : '');
     const [notification, setNotification] = useState({ message: '', visible: false });
+    const [badgeNotification, setBadgeNotification] = useState({ message: '', visible: false });
 
     const handleClick = async () => {
         if (!user) return;
@@ -66,20 +67,29 @@ const AssignmentDetails = ({ assignment }) => {
                 });
                 const userData = await userResponse.json();
 
-                // Display the notification with the updated points and badges
+                // Display the notification with the updated points
                 if (userResponse.ok) {
-                    let message = updatedAssignment.completed 
-                        ? `Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}`
-                        : `Assignment marked as incomplete. Points removed. Current points: ${userData.points}`;
-
-                    if (userData.badges.includes("Assignment Novice")) {
-                        message += " You've earned the Assignment Novice badge!";
+                    let newBadges = [];
+                    if (updatedAssignment.completed) {
+                        if (userData.badges.includes("Assignment Novice") && !assignment.completed) {
+                            newBadges.push("Assignment Novice");
+                        }
+                        if (userData.badges.includes("Deadline Pro") && !assignment.completed) {
+                            newBadges.push("Deadline Pro");
+                        }
                     }
-                    if (userData.badges.includes("Deadline Pro")) {
-                        message += " You've earned the Deadline Pro badge!";
+                    setNotification({
+                        message: updatedAssignment.completed 
+                            ? `Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}` 
+                            : `Assignment marked as incomplete. Points removed. Current points: ${userData.points}`,
+                        visible: true
+                    });
+                    if (newBadges.length > 0) {
+                        setBadgeNotification({
+                            message: `You've earned new badges: ${newBadges.join(', ')}!`,
+                            visible: true
+                        });
                     }
-
-                    setNotification({ message, visible: true });
                 } else {
                     console.error('Failed to fetch user data:', userData);
                 }
@@ -123,6 +133,10 @@ const AssignmentDetails = ({ assignment }) => {
 
     const handleCloseNotification = () => {
         setNotification({ ...notification, visible: false });
+    };
+
+    const handleCloseBadgeNotification = () => {
+        setBadgeNotification({ ...badgeNotification, visible: false });
     };
 
     const createdAt = formatDistanceToNow(new Date(assignment.createdAt), { addSuffix: true });
@@ -179,6 +193,9 @@ const AssignmentDetails = ({ assignment }) => {
             )}
             {notification.visible && (
                 <Notification message={notification.message} onClose={handleCloseNotification} />
+            )}
+            {badgeNotification.visible && (
+                <Notification message={badgeNotification.message} onClose={handleCloseBadgeNotification} />
             )}
         </div>
     );
