@@ -3,7 +3,7 @@ import { useAssignmentsContext } from "../hooks/useAssignmentsContext";
 import format from 'date-fns/format';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { useAuthContext } from '../hooks/useAuthContext';
-import Notification from './Notification'; // Import Notification component
+import Notification from './Notification';
 
 const AssignmentDetails = ({ assignment }) => {
     const { dispatch } = useAssignmentsContext();
@@ -21,9 +21,7 @@ const AssignmentDetails = ({ assignment }) => {
         try {
             const response = await fetch(`/api/assignments/${assignment._id}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`,
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` },
             });
 
             const json = await response.json();
@@ -61,32 +59,30 @@ const AssignmentDetails = ({ assignment }) => {
 
                 // Fetch updated user data
                 const userResponse = await fetch('/api/user/me', {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`,
-                    },
+                    headers: { 'Authorization': `Bearer ${user.token}` },
                 });
                 const userData = await userResponse.json();
 
-                // Display the notification with the updated points
                 if (userResponse.ok) {
-                    let newBadges = [];
-                    if (updatedAssignment.completed) {
-                        if (userData.badges.includes("Assignment Novice") && !assignment.completed) {
-                            newBadges.push("Assignment Novice");
-                        }
-                        if (userData.badges.includes("Deadline Pro") && !assignment.completed) {
-                            newBadges.push("Deadline Pro");
-                        }
+                    let newBadge = null;
+                    if (updatedAssignment.completed && !assignment.completed) {
+                        const completedCount = userData.assignmentsCompleted || 0;
+
+                        if (completedCount === 5) newBadge = "Assignment Novice";
+                        else if (completedCount === 10) newBadge = "Deadline Pro";
+                        // Add more badges as needed based on completedCount
                     }
+
                     setNotification({
                         message: updatedAssignment.completed 
                             ? `Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}` 
                             : `Assignment marked as incomplete. Points removed. Current points: ${userData.points}`,
                         visible: true
                     });
-                    if (newBadges.length > 0) {
+
+                    if (newBadge) {
                         setBadgeNotification({
-                            message: `You've earned new badges: ${newBadges.join(', ')}!`,
+                            message: `You've earned a new badge: ${newBadge}!`,
                             visible: true
                         });
                     }

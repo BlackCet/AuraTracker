@@ -83,11 +83,14 @@ const updateAssignment = async (req, res) => {
         const currentAssignment = await Assignment.findById(id);
 
         let pointsChange = 0;
+        let assignmentsCompletedChange = 0;
 
         if (!currentAssignment.completed && completed) {
             pointsChange = 10;
+            assignmentsCompletedChange = 1;
         } else if (currentAssignment.completed && !completed) {
             pointsChange = -10;
+            assignmentsCompletedChange = -1;
         }
 
         const updatedAssignment = await Assignment.findByIdAndUpdate(
@@ -102,11 +105,12 @@ const updateAssignment = async (req, res) => {
 
         const user = await User.findById(req.user._id);
         user.points += pointsChange;
+        user.assignmentsCompleted += assignmentsCompletedChange;
 
         // Check and assign badges
-        if (user.points >= 10 && !user.badges.includes("Assignment Novice")) {
+        if (user.assignmentsCompleted == 5 && !user.badges.includes("Assignment Novice")) {
             user.badges.push("Assignment Novice");
-        } else if (user.points >= 100 && !user.badges.includes("Deadline Pro")) {
+        } else if (user.assignmentsCompleted == 10 && !user.badges.includes("Deadline Pro")) {
             user.badges.push("Deadline Pro");
         }
 
@@ -118,5 +122,6 @@ const updateAssignment = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
 
 module.exports = { createAssignment, getAssignments, getAssignment, deleteAssignment, updateAssignment };
