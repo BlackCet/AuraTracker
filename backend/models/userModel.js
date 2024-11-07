@@ -30,8 +30,15 @@ const userSchema = new Schema({
     },
     profilePicture: {
         type: String,
-        default: "https://tse3.mm.bing.net/th?id=OIP.7dTfyRneXPY5b7pj0NKuUgHaHa&pid=Api&P=0&h=180" // Default to empty string if no profile picture is provided
+          default: "https://tse3.mm.bing.net/th?id=OIP.7dTfyRneXPY5b7pj0NKuUgHaHa&pid=Api&P=0&h=180" // Default to empty string if no profile picture is provided
+    }, 
+    assignmentsCompleted: { 
+        type: Number, default: 0 
+    }, 
+    badges: {
+         type: [String], default: [] 
     }
+    
 });
 
 

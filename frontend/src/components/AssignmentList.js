@@ -7,7 +7,7 @@ const AssignmentList = () => {
     const { assignments } = useAssignmentsContext();
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className=" z-0 p-4 bg-white rounded-lg shadow-md">
             <h2 className="text-teal-dark text-xl font-bold mb-4">Assignment Details</h2>
             {assignments.length > 0 ? (
                 assignments.map(assignment => (

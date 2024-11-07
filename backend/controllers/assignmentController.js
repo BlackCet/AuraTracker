@@ -82,14 +82,12 @@ const updateAssignment = async (req, res) => {
     try {
         const currentAssignment = await Assignment.findById(id);
 
-        // Check if we're marking this assignment as completed
+        let pointsChange = 0;
+
         if (!currentAssignment.completed && completed) {
-            // Increment user points if the assignment was not previously completed
-            await User.findByIdAndUpdate(
-                req.user._id,
-                { $inc: { points: 10 } }, // Increment points by 10
-                { new: true }
-            );
+            pointsChange = 10;
+        } else if (currentAssignment.completed && !completed) {
+            pointsChange = -10;
         }
 
         const updatedAssignment = await Assignment.findByIdAndUpdate(
@@ -101,6 +99,18 @@ const updateAssignment = async (req, res) => {
         if (!updatedAssignment) {
             return res.status(404).json({ message: "Assignment not found" });
         }
+
+        const user = await User.findById(req.user._id);
+        user.points += pointsChange;
+
+        // Check and assign badges
+        if (user.points >= 10 && !user.badges.includes("Assignment Novice")) {
+            user.badges.push("Assignment Novice");
+        } else if (user.points >= 100 && !user.badges.includes("Deadline Pro")) {
+            user.badges.push("Deadline Pro");
+        }
+
+        await user.save();
 
         res.status(200).json(updatedAssignment);
     } catch (err) {
