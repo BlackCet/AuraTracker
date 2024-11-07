@@ -1,4 +1,3 @@
-// LeaderboardEntry.js
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const LeaderboardEntry = ({ entry, rank }) => {
