@@ -14,6 +14,8 @@ const Event = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [title, setTitle] = useState('');
+  const [startTime, setStartTime] = useState('12:00'); // default start time
+  const [endTime, setEndTime] = useState(''); // optional end time
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -46,6 +48,8 @@ const Event = () => {
 
   const handleDateClick = (arg) => {
     setTitle('');
+    setStartTime('12:00'); // Reset start time for new event
+    setEndTime(''); // Reset end time for new event
     setCurrentEvent({ start: arg.dateStr, end: arg.dateStr });
     setModalOpen(true);
   };
@@ -53,19 +57,29 @@ const Event = () => {
   const handleEventClick = (clickInfo) => {
     const { event } = clickInfo;
     setTitle(event.title);
+    setStartTime(event.start.toTimeString().slice(0, 5)); // set start time
+    setEndTime(event.end ? event.end.toTimeString().slice(0, 5) : ''); // set end time if exists
     setCurrentEvent({
       id: event.id,
-      start: event.start.toISOString(),
-      end: event.end ? event.end.toISOString() : null,
+      start: event.start.toISOString().split('T')[0], // just the date part
+      end: event.end ? event.end.toISOString().split('T')[0] : event.start.toISOString().split('T')[0],
     });
     setModalOpen(true);
   };
 
   const saveEvent = async () => {
+    if (!title.trim()) {
+      alert("Event title cannot be empty.");
+      return;
+    }
+
+    const fullStart = `${currentEvent.start}T${startTime}:00`;
+    const fullEnd = endTime ? `${currentEvent.end}T${endTime}:00` : fullStart;
+
     const newEvent = {
       title,
-      start: currentEvent.start,
-      end: currentEvent.end,
+      start: fullStart,
+      end: fullEnd,
       user_id: user.id,
     };
 
@@ -76,14 +90,14 @@ const Event = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        dispatch({ type: 'UPDATE_EVENT', payload: res.data });
+        dispatch({ type: 'UPDATE_EVENT', payload: res.data }); // Update state immediately
       } else {
         const res = await axios.post('/api/events', newEvent, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        dispatch({ type: 'ADD_EVENT', payload: res.data });
+        dispatch({ type: 'ADD_EVENT', payload: res.data }); // Add to state immediately
       }
       setModalOpen(false);
     } catch (error) {
@@ -134,6 +148,21 @@ const Event = () => {
                 placeholder="Event Title"
                 className="input input-bordered w-full mt-2"
               />
+              <div className="flex mt-4 space-x-2">
+                <input
+                  type="time"
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  className="input input-bordered w-full"
+                />
+                <input
+                  type="time"
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                  className="input input-bordered w-full"
+                  placeholder="End Time"
+                />
+              </div>
               <div className="modal-action mt-4">
                 <button className="btn" onClick={saveEvent}>
                   Save

@@ -23,9 +23,57 @@ const sendReminderEmail = (email, assignment) => {
     from: process.env.EMAIL_USER,
     to: email,
     subject: `Reminder: Upcoming Assignment Due - ${assignment.title}`,
-    text: `Your assignment "${assignment.title}" is due on ${assignment.deadline}. Don't forget to complete it!`,
+    html: `
+      <div style="
+        font-family: Arial, sans-serif; 
+        border: 1px solid #ddd; 
+        padding: 20px; 
+        max-width: 600px; 
+        margin: auto; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      ">
+        <h2 style="
+          color: #4CAF50; 
+          text-align: center; 
+          font-size: 1.5em;
+        ">
+          Assignment Reminder
+        </h2>
+        <p style="
+          font-size: 1.1em; 
+          color: #333;
+        ">
+          Hello, just a friendly reminder that your assignment "<strong>${assignment.title}</strong>" is due soon.
+        </p>
+        <p style="
+          background: #f9f9f9; 
+          padding: 10px; 
+          border-radius: 5px;
+          font-size: 1.05em;
+          text-align: center;
+          color: #333;
+        ">
+          <strong>Due Date:</strong> ${assignment.deadline}
+        </p>
+        <p style="
+          margin-top: 20px;
+          font-size: 1em;
+          color: #555;
+        ">
+          Make sure to complete it on time to stay on track. If you have any questions or need assistance, feel free to reach out.
+        </p>
+        <p style="
+          margin-top: 30px; 
+          font-size: 0.9em; 
+          color: #777;
+          text-align: center;
+        ">
+          Best regards,<br>Your Course Team
+        </p>
+      </div>
+    `,
   };
-
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       return console.error('Error sending email:', error);
@@ -44,9 +92,10 @@ const checkUpcomingAssignments = async () => {
   try {
     const upcomingAssignments = await Assignment.find({
       deadline: { $gte: now, $lt: oneDayFromNow },
+      completed: false, // Only get assignments that are incomplete
     });
 
-    console.log(`Found ${upcomingAssignments.length} upcoming assignments.`);
+    console.log(`Found ${upcomingAssignments.length} upcoming incomplete assignments.`);
 
     const userEmails = {};
     for (const assignment of upcomingAssignments) {
@@ -63,7 +112,7 @@ const checkUpcomingAssignments = async () => {
 
       const email = userEmails[assignment.user_id];
       if (email) {
-        console.log(`Sending reminder for assignment "${assignment.title}" to ${email}`);
+        console.log(`Sending reminder for incomplete assignment "${assignment.title}" to ${email}`);
         sendReminderEmail(email, assignment);
       } else {
         console.log(`No email found for user ID: ${assignment.user_id}`);
@@ -74,8 +123,7 @@ const checkUpcomingAssignments = async () => {
   }
 };
 
-/// Schedule the reminder check to run once a day at a specific time (e.g., midnight)
-cron.schedule('0 0 * * *', checkUpcomingAssignments); // Runs daily at midnight
-
+// Schedule the reminder check to run every day at midnight
+cron.schedule('0 0 * * *', checkUpcomingAssignments);
 
 module.exports = checkUpcomingAssignments;
