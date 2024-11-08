@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Countdown from '../components/Countdown';
 
 const Dashboard = () => {
     return (
@@ -49,6 +50,10 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 {/* Add more cards as needed */}
+            </div>
+            <div className="my-6 p-4 bg-teal-100 rounded-lg shadow-lg">
+                <h2 className="text-xl font-semibold text-center text-teal-700">Upcoming Event Countdown</h2>
+                <Countdown />
             </div>
         </div>
     );
