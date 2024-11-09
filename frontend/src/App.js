@@ -13,7 +13,7 @@ import Events from "./pages/Events";
 import About from "./pages/About";
 import Profiles from "./pages/Profiles";
 import Team from "./pages/Team";
-
+import Timer from "./pages/Timer";
 function App() {
   const { user } = useAuthContext()
   
@@ -33,6 +33,7 @@ function App() {
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/schedule" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/Virtual Study Rooms" element={user ? <Timer />: <Navigate to="/login" />} />
 
           </Routes>
         </div>
