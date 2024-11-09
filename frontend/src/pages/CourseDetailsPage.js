@@ -93,13 +93,14 @@ const CourseDetail = () => {
     
 
     return (
-        <div className="max-w-3xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">Course Materials</h2>
+        <div className="max-w-6xl mx-auto p-4 flex flex-col md:flex-row">
+            
 
             {loading && <div className="text-center">Loading...</div>} {/* Loading Spinner */}
 
             {/* Materials List */}
-            <div className="mb-6">
+            <div className="flex-1 md:mr-4">
+                <h2 className="text-2xl font-bold mb-4">Course Materials</h2>
                 {materials.map((material) => (
                     <div key={material._id} className="mb-4 p-4 border rounded-lg bg-gray-100">
                         <h4 className="font-semibold">{material.title}</h4>
@@ -126,7 +127,7 @@ const CourseDetail = () => {
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border rounded bg-white"
                         required
                     />
                 </div>
@@ -135,7 +136,7 @@ const CourseDetail = () => {
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border rounded"
+                        className="w-full p-2 border rounded bg-white"
                         required
                     />
                 </div>
