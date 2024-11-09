@@ -10,7 +10,9 @@ const CourseDetails = ({ course }) => {
     const { user } = useAuthContext();
     const navigate = useNavigate();
 
-    const handleClick = async () => {
+    const handleClick = async (event) => {
+        event.stopPropagation(); // Prevent card click when delete button is clicked
+        
         if (!user) {
             alert('You must be logged in to delete a course.');
             return;
@@ -38,7 +40,8 @@ const CourseDetails = ({ course }) => {
     };
 
     // Navigate to Course Details page when card is clicked
-    const handleCardClick = () => {
+    const handleCardClick = (event) => {
+        if (event.target.closest('.delete-button')) return;
         navigate(`/course/${course._id}`);
     };
 
