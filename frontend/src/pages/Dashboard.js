@@ -45,8 +45,8 @@ const Dashboard = () => {
                 </div>
                 <div className="card">
                     <Link to="/studyroom">
-                        <h3>Virtual Study Rooms</h3>
-                        <p>Connect with your peers.</p>
+                        <h3>Pomodoro Timer</h3>
+                        <p>See your focus time here.</p>
                     </Link>
                 </div>
                 <div className="card">
@@ -57,7 +57,7 @@ const Dashboard = () => {
                 </div>
                 {/* Add more cards as needed */}
             </div>
-            <div className="my-6 p-4 bg-teal-100 rounded-lg shadow-lg">
+            <div className="my-6 p-4 bg-[#E2f1E7] rounded-lg shadow-lg">
                 <h2 className="text-xl font-semibold text-center text-teal-700">Upcoming Event Countdown</h2>
                 <Countdown />
             </div>
