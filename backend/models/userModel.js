@@ -40,8 +40,13 @@ const userSchema = new Schema({
     }, 
     badges: {
          type: [String], default: [] 
-    }
-    
+    },
+    xp: { 
+        type: Number, default: 0 
+    },
+    level: { 
+        type: Number, default: 1 
+    },
 });
 
 

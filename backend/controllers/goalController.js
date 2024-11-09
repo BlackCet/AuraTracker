@@ -1,6 +1,8 @@
 const Goal = require('../models/goalModel');
 const User = require('../models/userModel');
 const mongoose = require('mongoose');
+const { awardXP } = require("../services/xpService");
+
 
 // Add a new goal
 const addGoal = async (req, res) => {
@@ -74,6 +76,11 @@ const updateGoal = async (req, res) => {
         if (!currentGoal.completed && completed) {
             pointsChange = 5;
             goalsCompletedChange = 1;
+
+            // Award XP for completing a goal
+            const xpEarned = 20; // Adjust based on your XP rewards system
+            const result = await awardXP(req.user._id, xpEarned);
+            
         } else if (currentGoal.completed && !completed) {
             pointsChange = -5;
             goalsCompletedChange = -1;

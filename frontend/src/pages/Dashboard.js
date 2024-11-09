@@ -49,6 +49,12 @@ const Dashboard = () => {
                         <p>Connect with your peers.</p>
                     </Link>
                 </div>
+                <div className="card">
+                    <Link to="/analytics">
+                        <h3>Study Tracker</h3>
+                        <p>See your progress here.</p>
+                    </Link>
+                </div>
                 {/* Add more cards as needed */}
             </div>
             <div className="my-6 p-4 bg-teal-100 rounded-lg shadow-lg">
