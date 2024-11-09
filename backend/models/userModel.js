@@ -34,6 +34,9 @@ const userSchema = new Schema({
     }, 
     assignmentsCompleted: { 
         type: Number, default: 0 
+    },
+    goalsCompleted: { 
+        type: Number, default: 0 
     }, 
     badges: {
          type: [String], default: [] 
