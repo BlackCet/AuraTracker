@@ -5,12 +5,19 @@ const Timer = () => {
   const [breakDuration, setBreakDuration] = useState(5); // in minutes
   const [minutes, setMinutes] = useState(workDuration);
   const [seconds, setSeconds] = useState(0);
+  //New state to check if timer is running or not
   const [isActive, setIsActive] = useState(false);
+  //New phase to determine if crnt phase is break or not
   const [isBreak, setIsBreak] = useState(false);
-  const [isFinished, setIsFinished] = useState(false); // New state for animation
-  const [showPartyPopper, setShowPartyPopper] = useState(false); // Party popper state
-  const [isTransitioning, setIsTransitioning] = useState(false); // State to manage transition between work and break
-  const [message, setMessage] = useState(""); // State for the message
+  // New state for adding animation
+  const [isFinished, setIsFinished] = useState(false); 
+  // Party popper state
+  const [showPartyPopper, setShowPartyPopper] = useState(false); 
+  // State to manage transition between work and break
+  const [isTransitioning, setIsTransitioning] = useState(false); 
+  // State for the message
+  const [message, setMessage] = useState(""); 
+
   useEffect(() => {
     let timer;
   
@@ -30,7 +37,7 @@ const Timer = () => {
             setIsTransitioning(true); // Start the transition to break
             setShowPartyPopper(true); // Show party popper for celebration
             setMessage("Time for a quick break!"); // Message after work finishes
-            setTimeout(() => setShowPartyPopper(false), 3000); // Hide party popper after 3 seconds
+            setTimeout(() => setShowPartyPopper(false), 3000); // time for which party popper will show
   
             setTimeout(() => {
               setIsBreak(true); // Switch to break after work is done

@@ -133,6 +133,7 @@ div.error {
   background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  background-color: #E2F1E7;
   padding: 20px;
   width: 45%; /* Ensure two cards per row */
   text-align: center;
@@ -207,3 +208,4 @@ nav button{
 .Desc{
   background-color: #E2F1E7;
 }
+
