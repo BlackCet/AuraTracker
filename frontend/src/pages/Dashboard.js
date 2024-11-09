@@ -9,8 +9,8 @@ const Dashboard = () => {
             <div className="card-container">
                 <div className="card">
                     <Link to="/course">
-                        <h3>Courses</h3>
-                        <p>See all your courses here</p>
+                        <h3>Course materials</h3>
+                        <p>See all your courses material here</p>
                     </Link>
                 </div>
                 <div className="card">
@@ -47,6 +47,12 @@ const Dashboard = () => {
                     <Link to="/studyroom">
                         <h3>Virtual Study Rooms</h3>
                         <p>Connect with your peers.</p>
+                    </Link>
+                </div>
+                <div className="card">
+                    <Link to="/analytics">
+                        <h3>Study Tracker</h3>
+                        <p>See your progress here.</p>
                     </Link>
                 </div>
                 {/* Add more cards as needed */}
