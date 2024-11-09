@@ -79,4 +79,61 @@ const updateCourse = async (req, res) => {
 };
 
 
-module.exports = { createCourse, getCourses, getCourse, deleteCourse, updateCourse };
+// Fetch all materials for a course
+const getMaterials = async (req, res) => {
+    const { courseId } = req.params; // Only the courseId is needed
+    console.log("Fetching materials for course ID:", courseId); // Debug line
+
+    try {
+        // Find the course by courseId
+        const course = await Course.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+
+        // Return the list of materials for the course
+        res.json(course.materials.map(material => ({
+            ...material.toObject(),
+            filePath: `${req.protocol}://${req.get('host')}/${material.filePath.replace('\\', '/')}`
+        })));
+        
+    } catch (err) {
+        res.status(500).json({ message: 'Error fetching materials', error: err.message });
+    }
+};
+
+
+const uploadMaterial = async (req, res) => {
+    const { courseId } = req.params; 
+    const { title, description } = req.body;
+  
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+  
+    console.log(req.file);  // Log the file to verify its content
+  
+    const filePath = req.file.path;
+    const newMaterial = { title, description, filePath };
+  
+    try {
+      const course = await Course.findByIdAndUpdate(
+        courseId,
+        { $push: { materials: newMaterial } },
+        { new: true }
+      );
+  
+      if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+  
+      res.json(course.materials); // Return the updated list of materials
+    } catch (err) {
+      res.status(500).json({ message: 'Error uploading material', error: err.message });
+    }
+  };
+  
+
+
+
+module.exports = { createCourse, getCourses, getCourse, deleteCourse, updateCourse, getMaterials, uploadMaterial };

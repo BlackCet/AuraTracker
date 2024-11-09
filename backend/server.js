@@ -1,10 +1,13 @@
 //configure dotenv
 require('dotenv').config()
 
-//requre express
+//require dependencies
 const express = require('express')
 const userRoutes = require('./routes/user')
 const mongoose = require('mongoose')
+const path = require('path')
+
+//import routes
 const dashboardRoutes = require('./routes/dashboard')
 const courseRoutes = require('./routes/course')
 const assignmentRoutes = require('./routes/assignment')
@@ -23,6 +26,9 @@ app.use((req, res, next) => {
     console.log(`${req.method} request for ${req.url}`)
     next()
 })
+
+//serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //routes
 app.use('/api/user', userRoutes)

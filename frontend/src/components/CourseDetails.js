@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+
+//imoort the necessary modules
 import { useCoursesContext } from "../hooks/useCoursesContext";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -5,6 +8,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const CourseDetails = ({ course }) => {
     const { dispatch } = useCoursesContext();
     const { user } = useAuthContext();
+    const navigate = useNavigate();
 
     const handleClick = async () => {
         if (!user) {
@@ -33,8 +37,13 @@ const CourseDetails = ({ course }) => {
         }
     };
 
+    // Navigate to Course Details page when card is clicked
+    const handleCardClick = () => {
+        navigate(`/course/${course._id}`);
+    };
+
     return (
-        <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 transition-transform transform hover:scale-105">
+        <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 transition-transform transform hover:scale-105 " onClick={handleCardClick}>
             <h4 className="text-teal-dark text-lg font-semibold">{course.name}</h4>
             <p><strong>No of units:</strong> {course.units}</p>
             <p><strong>Course credits:</strong> {course.creditScore}</p>
