@@ -6,7 +6,7 @@ import { useGoalsContext } from '../hooks/useGoalsContext';
 
 const AcademicGoals = () => {
     const [goals, setGoals] = useState([]);
-    const [filter, setFilter] = useState('All'); // Add state for the filter
+    const [filter] = useState('All'); // Add state for the filter
     const { user } = useAuthContext(); // Access the user from auth context
     const { dispatch } = useGoalsContext(); // Access the dispatch function from GoalsContext
 
@@ -96,32 +96,6 @@ const AcademicGoals = () => {
 
     return (
         <div className="app p-4 flex flex-col">
-            <div className="flex justify-center mt-4">
-                <button
-                    className={`p-2 mx-2 ${filter === 'All' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('All')}
-                >
-                    All
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'Low' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('Low')}
-                >
-                    Low
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'Medium' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('Medium')}
-                >
-                    Medium
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'High' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('High')}
-                >
-                    High
-                </button>
-            </div>
             <div className="flex justify-between mb-4">
                 <div className="w-1/3 mr-4">
                     <h1 className="text-2xl font-bold mb-4">Academic Goals</h1>
