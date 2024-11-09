@@ -16,6 +16,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
+import Analytics from "./pages/Analytics";
 
 function App() {
   const { user } = useAuthContext()
@@ -37,6 +38,7 @@ function App() {
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/analytics" element={<Analytics />} />
             <Route path="/course/:courseId" element={<CourseDetailsPage />} />
             <Route path="/goals" element={user ? <Goals/> : <Navigate to="/login" /> } />
           </Routes>

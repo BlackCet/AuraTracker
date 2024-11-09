@@ -9,8 +9,8 @@ const Dashboard = () => {
             <div className="card-container">
                 <div className="card">
                     <Link to="/course">
-                        <h3>Courses</h3>
-                        <p>See all your courses here</p>
+                        <h3>Course materials</h3>
+                        <p>See all your courses material here</p>
                     </Link>
                 </div>
                 <div className="card">
