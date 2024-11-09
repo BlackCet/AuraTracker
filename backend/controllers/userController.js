@@ -94,5 +94,5 @@ const updateUser = async (req, res) => {
     }
 };
 
-module.exports = { loginUser, signupUser, getUserData, updateUser, getLeaderboard };
+module.exports = { loginUser, signupUser, getUserData, updateUser,  getLeaderboard };
 

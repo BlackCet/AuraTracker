@@ -48,6 +48,12 @@ const Dashboard = () => {
                         <p>Connect with your peers.</p>
                     </Link>
                 </div>
+                <div className="card">
+                    <Link to="/timetable">
+                        <h3>Timetable</h3>
+                        <p>See your timetable for the day</p>
+                    </Link>
+                </div>
                 {/* Add more cards as needed */}
             </div>
         </div>
