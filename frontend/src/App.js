@@ -16,12 +16,9 @@ import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
-<<<<<<< HEAD
 import Timer from "./pages/Timer";
-=======
 import Analytics from "./pages/Analytics";
 
->>>>>>> a0ef17ec5d470b2cc59589dcb79dd47b85856725
 function App() {
   const { user } = useAuthContext()
   
