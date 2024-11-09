@@ -23,7 +23,25 @@ const userSchema = new Schema({
         type: String,
         unique: true,
         sparse: true // Allows null values while enforcing uniqueness
+    },
+    points: {
+        type: Number,
+        default: 0 // Initialize points to zero
+    },
+    profilePicture: {
+        type: String,
+          default: "https://tse3.mm.bing.net/th?id=OIP.7dTfyRneXPY5b7pj0NKuUgHaHa&pid=Api&P=0&h=180" // Default to empty string if no profile picture is provided
+    }, 
+    assignmentsCompleted: { 
+        type: Number, default: 0 
+    },
+    goalsCompleted: { 
+        type: Number, default: 0 
+    }, 
+    badges: {
+         type: [String], default: [] 
     }
+    
 });
 
 
@@ -110,7 +128,5 @@ userSchema.statics.loginWithGoogle = async function(googleId, email, username) {
     user = await this.create({ googleId, email, username });
     return user;
 };
-
-
 
 module.exports = mongoose.model('User', userSchema);
