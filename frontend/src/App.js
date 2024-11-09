@@ -12,15 +12,11 @@ import Assignments from "./pages/Assignments";
 import Events from "./pages/Events";
 import About from "./pages/About";
 import Profiles from "./pages/Profiles";
-<<<<<<< HEAD
-import Team from "./pages/Team";
-=======
 import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 
->>>>>>> 275ca6d04c3f76705b1855dd6f564405e63fa2db
 function App() {
   const { user } = useAuthContext()
   
@@ -41,12 +37,8 @@ function App() {
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
-<<<<<<< HEAD
-
-=======
             <Route path="/course/:courseId" element={<CourseDetailsPage />} />
             <Route path="/goals" element={user ? <Goals/> : <Navigate to="/login" /> } />
->>>>>>> 275ca6d04c3f76705b1855dd6f564405e63fa2db
           </Routes>
         </div>
         <Footer />
