@@ -11,9 +11,9 @@ const CourseDetail = () => {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);   
 
-    
     useEffect(() => {
         const fetchMaterials = async () => {
+            setLoading(true);  // Set loading to true before fetching
             try {
                 const response = await fetch(`/api/course/${courseId}/materials`, {
                     headers: { 'Authorization': `Bearer ${user.token}` }
@@ -27,8 +27,8 @@ const CourseDetail = () => {
             } catch (error) {
                 console.error('Error fetching materials:', error);
                 alert('Could not fetch materials. Try again later.');
-            }finally {
-                setLoading(false);
+            } finally {
+                setLoading(false); // Set loading to false once the fetching is done
             }
         };
 
@@ -71,6 +71,27 @@ const CourseDetail = () => {
         }
     };
 
+    const handleDeleteMaterial = async (materialId) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this material?');
+        if (confirmDelete) {
+            const response = await fetch(`/api/course/${courseId}/materials/${materialId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`,
+                },
+            });
+            if (response.ok) {
+                setMaterials((prevMaterials) => 
+                    prevMaterials.filter((material) => material._id !== materialId)
+                );
+                alert('Material deleted successfully');
+            } else {
+                alert('Failed to delete material');
+            }
+        }
+    };
+    
+
     return (
         <div className="max-w-3xl mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">Course Materials</h2>
@@ -86,6 +107,12 @@ const CourseDetail = () => {
                         <a href={material.filePath} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                             View Material
                         </a>
+                        <span 
+                            className="material-symbols-outlined cursor-pointer text-red-500 hover:text-red-700" 
+                            onClick={() => handleDeleteMaterial(material._id)} // Call handleDeleteMaterial with the material ID
+                        >
+                            delete
+                        </span>
                     </div>
                 ))}
             </div>

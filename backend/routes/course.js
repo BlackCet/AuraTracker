@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 
 //import controllers
-const { createCourse, getCourses, getCourse, deleteCourse, updateCourse, getMaterials, uploadMaterial } = require('../controllers/courseController');
+const { createCourse, getCourses, getCourse, deleteCourse, updateCourse, getMaterials, uploadMaterial, deleteMaterial } = require('../controllers/courseController');
 
 const router = express.Router();
 
@@ -65,5 +65,7 @@ router.get('/:courseId/materials', getMaterials);
 
 // POST a material for a course (with file upload)
 router.post('/:courseId/materials', upload.single('material'), uploadMaterial);
+
+router.delete('/:courseId/materials/:materialId', deleteMaterial);
 
 module.exports = router;
