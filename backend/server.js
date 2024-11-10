@@ -1,5 +1,7 @@
 //configure dotenv
 require('dotenv').config()
+// console.log(process.env.EMAIL_HOST, process.env.EMAIL_USER); // This should output your email details if loaded
+// console.log("EMAIL_HOST:", process.env.EMAIL_HOST); // Should output your EMAIL_HOST value
 
 //require dependencies
 const express = require('express')

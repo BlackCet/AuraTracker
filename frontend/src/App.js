@@ -16,6 +16,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
+import Timer from "./pages/Timer";
 import Analytics from "./pages/Analytics";
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/course/:courseId" element={<CourseDetailsPage />} />
             <Route path="/goals" element={user ? <Goals/> : <Navigate to="/login" /> } />
+            <Route path="/studyroom" element={user ? <Timer />: <Navigate to="/login" />} />
+
           </Routes>
         </div>
         <Footer />
