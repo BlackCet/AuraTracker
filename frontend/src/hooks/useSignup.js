@@ -21,15 +21,19 @@ export const useSignup = () => {
       setIsLoading(false)
       setError(json.error)
     }
-    if (response.ok) {
-      // save the user to local storage
-      localStorage.setItem('user', JSON.stringify(json))
+    else {
+      // Combine token with user data
+      const userWithToken = {
+        ...json.user,
+        token: json.token || json.user.token, // Assuming your server sends token in json.token or json.user.token
+      };
 
-      // update the auth context
-      dispatch({type: 'LOGIN', payload: json})
+      // Save the combined user object to local storage
+      localStorage.setItem('user', JSON.stringify(userWithToken)); // Store combined user data
 
-      // update loading state
-      setIsLoading(false)
+      // Dispatch action to update auth context
+      dispatch({ type: 'LOGIN', payload: userWithToken });
+      setIsLoading(false);
     }
   }
 
