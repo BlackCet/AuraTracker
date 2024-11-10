@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Countdown from '../components/Countdown';
 
 const Dashboard = () => {
     return (
@@ -8,8 +9,8 @@ const Dashboard = () => {
             <div className="card-container">
                 <div className="card">
                     <Link to="/course">
-                        <h3>Courses</h3>
-                        <p>See all your courses here</p>
+                        <h3>Course materials</h3>
+                        <p>See all your courses material here</p>
                     </Link>
                 </div>
                 <div className="card">
@@ -49,12 +50,22 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="card">
+
                     <Link to="/timetable">
                         <h3>Timetable</h3>
                         <p>See your timetable for the day</p>
+
+                    <Link to="/analytics">
+                        <h3>Study Tracker</h3>
+                        <p>See your progress here.</p>
+
                     </Link>
                 </div>
                 {/* Add more cards as needed */}
+            </div>
+            <div className="my-6 p-4 bg-teal-100 rounded-lg shadow-lg">
+                <h2 className="text-xl font-semibold text-center text-teal-700">Upcoming Event Countdown</h2>
+                <Countdown />
             </div>
         </div>
     );

@@ -16,6 +16,10 @@ import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
 import Timetablee from "./pages/Timetablee";
+import CourseDetailsPage from "./pages/CourseDetailsPage";
+import Timer from "./pages/Timer";
+import Analytics from "./pages/Analytics";
+
 
 function App() {
   const { user } = useAuthContext()
@@ -38,7 +42,11 @@ function App() {
             <Route path="/timetable" element={user ? <Timetablee/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
-            <Route path="/goals" element={<Goals/>} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/course/:courseId" element={<CourseDetailsPage />} />
+            <Route path="/goals" element={user ? <Goals/> : <Navigate to="/login" /> } />
+            <Route path="/studyroom" element={user ? <Timer />: <Navigate to="/login" />} />
+
           </Routes>
         </div>
         <Footer />

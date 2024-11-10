@@ -34,11 +34,19 @@ const userSchema = new Schema({
     }, 
     assignmentsCompleted: { 
         type: Number, default: 0 
+    },
+    goalsCompleted: { 
+        type: Number, default: 0 
     }, 
     badges: {
          type: [String], default: [] 
-    }
-    
+    },
+    xp: { 
+        type: Number, default: 0 
+    },
+    level: { 
+        type: Number, default: 1 
+    },
 });
 
 

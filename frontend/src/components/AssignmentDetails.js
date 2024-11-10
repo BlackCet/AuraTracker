@@ -3,7 +3,7 @@ import { useAssignmentsContext } from "../hooks/useAssignmentsContext";
 import format from 'date-fns/format';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { useAuthContext } from '../hooks/useAuthContext';
-import Notification from './Notification'; // Import Notification component
+import Notification from './Notification';
 
 const AssignmentDetails = ({ assignment }) => {
     const { dispatch } = useAssignmentsContext();
@@ -13,6 +13,7 @@ const AssignmentDetails = ({ assignment }) => {
     const [description, setDescription] = useState(assignment.description);
     const [deadline, setDeadline] = useState(assignment.deadline ? format(new Date(assignment.deadline), 'yyyy-MM-dd\'T\'HH:mm') : '');
     const [notification, setNotification] = useState({ message: '', visible: false });
+    const [badgeNotification, setBadgeNotification] = useState({ message: '', visible: false });
 
     const handleClick = async () => {
         if (!user) return;
@@ -20,9 +21,7 @@ const AssignmentDetails = ({ assignment }) => {
         try {
             const response = await fetch(`/api/assignments/${assignment._id}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`,
-                }
+                headers: { 'Authorization': `Bearer ${user.token}` },
             });
 
             const json = await response.json();
@@ -60,26 +59,33 @@ const AssignmentDetails = ({ assignment }) => {
 
                 // Fetch updated user data
                 const userResponse = await fetch('/api/user/me', {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`,
-                    },
+                    headers: { 'Authorization': `Bearer ${user.token}` },
                 });
                 const userData = await userResponse.json();
 
-                // Display the notification with the updated points and badges
                 if (userResponse.ok) {
-                    let message = updatedAssignment.completed 
-                        ? `Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}`
-                        : `Assignment marked as incomplete. Points removed. Current points: ${userData.points}`;
+                    let newBadge = null;
+                    if (updatedAssignment.completed && !assignment.completed) {
+                        const completedCount = userData.assignmentsCompleted || 0;
 
-                    if (userData.badges.includes("Assignment Novice")) {
-                        message += " You've earned the Assignment Novice badge!";
-                    }
-                    if (userData.badges.includes("Deadline Pro")) {
-                        message += " You've earned the Deadline Pro badge!";
+                        if (completedCount === 5) newBadge = "Assignment Novice";
+                        else if (completedCount === 10) newBadge = "Deadline Pro";
+                        // Add more badges as needed based on completedCount
                     }
 
-                    setNotification({ message, visible: true });
+                    setNotification({
+                        message: updatedAssignment.completed 
+                            ? `Bravo! 🎉 +10 points added to your score. Your current points: ${userData.points}` 
+                            : `Assignment marked as incomplete. Points removed. Current points: ${userData.points}`,
+                        visible: true
+                    });
+
+                    if (newBadge) {
+                        setBadgeNotification({
+                            message: `You've earned a new badge: ${newBadge}!`,
+                            visible: true
+                        });
+                    }
                 } else {
                     console.error('Failed to fetch user data:', userData);
                 }
@@ -123,6 +129,10 @@ const AssignmentDetails = ({ assignment }) => {
 
     const handleCloseNotification = () => {
         setNotification({ ...notification, visible: false });
+    };
+
+    const handleCloseBadgeNotification = () => {
+        setBadgeNotification({ ...badgeNotification, visible: false });
     };
 
     const createdAt = formatDistanceToNow(new Date(assignment.createdAt), { addSuffix: true });
@@ -179,6 +189,9 @@ const AssignmentDetails = ({ assignment }) => {
             )}
             {notification.visible && (
                 <Notification message={notification.message} onClose={handleCloseNotification} />
+            )}
+            {badgeNotification.visible && (
+                <Notification message={badgeNotification.message} onClose={handleCloseBadgeNotification} />
             )}
         </div>
     );

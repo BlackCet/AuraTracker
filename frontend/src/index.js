@@ -8,6 +8,8 @@ import { AssignmentsContextProvider } from "./context/AssignmentsContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { EventContextProvider } from "./context/EventContext";
 import { TimetableContextProvider} from "./context/TimetableContext";
+import { GoalsContextProvider } from "./context/GoalsContext";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,11 +19,12 @@ root.render(
     <AssignmentsContextProvider>
     <EventContextProvider>
     <TimetableContextProvider>
+    <GoalsContextProvider>
     <GoogleOAuthProvider clientId="646626177801-4g39k4q77ip2oe1hdamdfqijkbgmmfor.apps.googleusercontent.com">
       <App />
     </GoogleOAuthProvider>
-    
-    </TimetableContextProvider>
+    </GoalsContextProvider>
+</TimetableContextProvider>
     </EventContextProvider>
     </AssignmentsContextProvider>
     </CoursesContextProvider>

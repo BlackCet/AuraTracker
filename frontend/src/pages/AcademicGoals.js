@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import GoalList from '../components/GoalList';
 import AddGoalForm from '../components/GoalForm';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useGoalsContext } from '../hooks/useGoalsContext';
 
-const Goals = () => {
+const AcademicGoals = () => {
     const [goals, setGoals] = useState([]);
-    const [filter, setFilter] = useState('All'); // Add state for the filter
+    const [filter] = useState('All'); // Add state for the filter
+    const { user } = useAuthContext(); // Access the user from auth context
+    const { dispatch } = useGoalsContext(); // Access the dispatch function from GoalsContext
 
     useEffect(() => {
-        fetchGoals();
-    }, []);
+        const fetchGoals = async () => { 
+            const response = await fetch('/api/goals', {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                } 
+            }); 
+            const json = await response.json();
 
-    const fetchGoals = async () => {
-        try {
-            const response = await fetch('/api/goals');
-            const data = await response.json();
-            setGoals(data);
-        } catch (error) {
-            console.error('Error fetching goals:', error);
+            if (response.ok) {
+                dispatch({ type: 'SET_GOALS', payload: json }); 
+            }
+        };
+
+        if(user){
+            fetchGoals();
         }
-    };
+
+    }, [dispatch, user]); // Remove fetchGoals from the dependency array to resolve the warning
+
 
     const addGoal = async (goal) => {
         try {
             const response = await fetch('/api/goals', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`,
+                },
                 body: JSON.stringify(goal),
             });
             const newGoal = await response.json();
-            setGoals([...goals, newGoal]);
+            if (response.ok) {
+                setGoals([...goals, newGoal]);
+            }
         } catch (error) {
             console.error('Error adding goal:', error);
         }
@@ -40,11 +56,16 @@ const Goals = () => {
             const updatedGoal = { ...goal, completed: !goal.completed };
             const response = await fetch(`/api/goals/${id}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`,
+                },
                 body: JSON.stringify(updatedGoal),
             });
             const newGoal = await response.json();
-            setGoals(goals.map(g => (g._id === id ? newGoal : g)));
+            if (response.ok) {
+                setGoals(goals.map(g => (g._id === id ? newGoal : g)));
+            }
         } catch (error) {
             console.error('Error updating goal:', error);
         }
@@ -52,10 +73,15 @@ const Goals = () => {
 
     const deleteGoal = async (id) => {
         try {
-            await fetch(`/api/goals/${id}`, {
+            const response = await fetch(`/api/goals/${id}`, {
                 method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
             });
-            setGoals(goals.filter(g => g._id !== id));
+            if (response.ok) {
+                setGoals(goals.filter(g => g._id !== id));
+            }
         } catch (error) {
             console.error('Error deleting goal:', error);
         }
@@ -70,32 +96,6 @@ const Goals = () => {
 
     return (
         <div className="app p-4 flex flex-col">
-            <div className="flex justify-center mt-4">
-                <button
-                    className={`p-2 mx-2 ${filter === 'All' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('All')}
-                >
-                    All
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'Low' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light '}`}
-                    onClick={() => setFilter('Low')}
-                >
-                    Low
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'Medium' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('Medium')}
-                >
-                    Medium
-                </button>
-                <button
-                    className={`p-2 mx-2 ${filter === 'High' ? 'bg-teal-500 text-white hover:bg-teal-light' : 'bg-gray-200 hover:bg-teal-light'}`}
-                    onClick={() => setFilter('High')}
-                >
-                    High
-                </button>
-            </div>
             <div className="flex justify-between mb-4">
                 <div className="w-1/3 mr-4">
                     <h1 className="text-2xl font-bold mb-4">Academic Goals</h1>
@@ -109,4 +109,4 @@ const Goals = () => {
     );
 };
 
-export default Goals;
+export default AcademicGoals;

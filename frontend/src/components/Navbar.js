@@ -11,7 +11,7 @@ const Navbar = () => {
     };
 
     return (
-        <header className="bg-gray-100 shadow-md">
+        <header className="bg-[#E2F1E7] shadow-md">
             <div className="container mx-auto px-10 py-4 flex justify-between items-center">
                 {/* Logo as a ghost button */}
                 <Link to="/" className="btn btn-ghost text-teal-600 font-bold text-lg">

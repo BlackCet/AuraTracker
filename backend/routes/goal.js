@@ -1,9 +1,9 @@
 const express = require('express');
 const { addGoal, getGoals, getGoal, updateGoal, deleteGoal } = require('../controllers/goalController');
 const router = express.Router();
-// const requireAuth = require('../middleware/requireAuth');
+const requireAuth = require('../middleware/requireAuth');
 
-// router.use(requireAuth);
+router.use(requireAuth);
 
 // GET all courses
 router.get('/', getGoals);
