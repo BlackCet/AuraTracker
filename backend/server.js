@@ -16,6 +16,7 @@ const assignmentRoutes = require('./routes/assignment')
 const eventRoutes = require('./routes/event')
 const goalRoutes = require('./routes/goal')
 const authRoutes = require('./routes/authRoutes')
+const timetableRoutes = require('./routes/timetable');
 require('./scheduler/assignmentsScheduler')
 
 //create an express app
@@ -40,6 +41,7 @@ app.use('/api/assignments', assignmentRoutes)
 app.use("/api/events", eventRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/goals', goalRoutes)
+app.use('/api/timetables', timetableRoutes);
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)

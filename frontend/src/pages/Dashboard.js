@@ -50,9 +50,15 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="card">
+
+                    <Link to="/timetable">
+                        <h3>Timetable</h3>
+                        <p>See your timetable for the day</p>
+
                     <Link to="/analytics">
                         <h3>Study Tracker</h3>
                         <p>See your progress here.</p>
+
                     </Link>
                 </div>
                 {/* Add more cards as needed */}

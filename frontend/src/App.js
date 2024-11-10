@@ -15,9 +15,11 @@ import Profiles from "./pages/Profiles";
 import Leaderboard from "./pages/Leaderboard";
 import Team from "./pages/Team";
 import Goals from "./pages/AcademicGoals";
+import Timetablee from "./pages/Timetablee";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import Timer from "./pages/Timer";
 import Analytics from "./pages/Analytics";
+
 
 function App() {
   const { user } = useAuthContext()
@@ -37,6 +39,7 @@ function App() {
             <Route path="/assignments" element={user ? <Assignments /> : <Navigate to="/login" />} />
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/login" />} />
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
+            <Route path="/timetable" element={user ? <Timetablee/> : <Navigate to="/login" />} />
             <Route path="/about" element={<About />} />
             <Route path="/team" element={<Team />} />
             <Route path="/analytics" element={<Analytics />} />
