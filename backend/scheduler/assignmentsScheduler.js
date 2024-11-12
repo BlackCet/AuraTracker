@@ -124,6 +124,6 @@ const checkUpcomingAssignments = async () => {
 };
 
 // Schedule the reminder check to run every day at midnight
-cron.schedule('0 0 * * *', checkUpcomingAssignments);
+cron.schedule('29 14 * * *', checkUpcomingAssignments);
 
 module.exports = checkUpcomingAssignments;
