@@ -41,16 +41,18 @@ const TimetableDisplay = () => {
               </tr>
             </thead>
             <tbody>
-              {Object.keys(timetable).map((day) => (
-                <tr key={day} className="border-b hover:bg-teal-50">
-                  <td className="px-4 py-2 font-semibold capitalize">{day}</td>
-                  {(Array.isArray(timetable[day]) ? timetable[day] : []).map((period, index) => (
-                    <td key={index} className="px-4 py-2">
-                      {period}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {Object.keys(timetable)
+                .filter((key) => !['_id', 'user_id', '__v'].includes(key)) // Exclude metadata fields
+                .map((day) => (
+                  <tr key={day} className="border-b hover:bg-teal-50">
+                    <td className="px-4 py-2 font-semibold capitalize">{day}</td>
+                    {(Array.isArray(timetable[day]) ? timetable[day] : []).map((period, index) => (
+                      <td key={index} className="px-4 py-2">
+                        {period}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
