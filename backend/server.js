@@ -8,6 +8,7 @@ const express = require('express')
 const userRoutes = require('./routes/user')
 const mongoose = require('mongoose')
 const path = require('path')
+const cors = require('cors')
 
 //import routes
 const dashboardRoutes = require('./routes/dashboard')
@@ -24,6 +25,8 @@ const app = express()
 
 //logger middleware
 app.use(express.json())
+
+app.use(cors())
 
 app.use((req, res, next) => {
     console.log(`${req.method} request for ${req.url}`)
