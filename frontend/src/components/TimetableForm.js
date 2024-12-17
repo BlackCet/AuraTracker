@@ -27,7 +27,7 @@ const TimetableForm = () => {
       setLoading(true); // Set loading state to true
       setError(''); // Clear previous errors
   
-      const response = await fetch('/api/timetables', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ const AddGoalForm = () => {
         const goal = { title, priority, completed: false };
 
         try {
-            const response = await fetch('/api/goals', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals`, {
                 method: 'POST',
                 body: JSON.stringify(goal),
                 headers: {

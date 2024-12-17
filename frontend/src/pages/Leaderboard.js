@@ -11,7 +11,7 @@ const Leaderboard = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const response = await fetch('/api/user/leaderboard', {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/leaderboard`, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }

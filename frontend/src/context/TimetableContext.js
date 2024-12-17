@@ -49,7 +49,7 @@ export const TimetableContextProvider = ({ children }) => {
       // Fetch timetable from API if not found in localStorage
       const fetchTimetable = async () => {
         try {
-          const response = await fetch('/api/timetables');
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`);
           const data = await response.json();
           dispatch({ type: 'SET_TIMETABLE', payload: data });
           // Save the timetable in localStorage

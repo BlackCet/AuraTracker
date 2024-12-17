@@ -12,7 +12,7 @@ const AcademicGoals = () => {
 
     useEffect(() => {
         const fetchGoals = async () => { 
-            const response = await fetch('/api/goals', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 } 
@@ -33,7 +33,7 @@ const AcademicGoals = () => {
 
     const addGoal = async (goal) => {
         try {
-            const response = await fetch('/api/goals', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const AcademicGoals = () => {
         try {
             const goal = goals.find(g => g._id === id);
             const updatedGoal = { ...goal, completed: !goal.completed };
-            const response = await fetch(`/api/goals/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const AcademicGoals = () => {
 
     const deleteGoal = async (id) => {
         try {
-            const response = await fetch(`/api/goals/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals/${id}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${user.token}`,

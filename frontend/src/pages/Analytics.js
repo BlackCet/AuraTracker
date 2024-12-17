@@ -20,7 +20,7 @@ const Analytics = () => {
     const fetchAnalytics = async () => {
       try {
         if (user && user.token) {
-          const response = await fetch('/api/user/me', {
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${user.token}`, // Use the user's token from context

@@ -16,7 +16,7 @@ const GoalItem = ({ goal }) => {
         const updatedGoal = { ...goal, completed: !goal.completed };
 
         try {
-            const response = await fetch(`/api/goals/${goal._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals/${goal._id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(updatedGoal),
                 headers: {
@@ -30,7 +30,7 @@ const GoalItem = ({ goal }) => {
             if (response.ok) {
                 dispatch({ type: 'UPDATE_GOAL', payload: json }); // Dispatch the updated goal to GoalsContext
 
-                const userResponse = await fetch('/api/user/me', {
+                const userResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
                     headers: { 'Authorization': `Bearer ${user.token}` },
                 });
                 const userData = await userResponse.json();
@@ -73,7 +73,7 @@ const GoalItem = ({ goal }) => {
         if (!user) return;
 
         try {
-            const response = await fetch(`/api/goals/${goal._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/goals/${goal._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,

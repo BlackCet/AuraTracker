@@ -19,7 +19,7 @@ const CourseDetails = ({ course }) => {
         }
 
         try {
-            const response = await fetch('/api/course/' + course._id, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/course/` + course._id, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,

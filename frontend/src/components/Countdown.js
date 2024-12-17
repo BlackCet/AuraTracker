@@ -10,7 +10,7 @@ const Countdown = () => {
   useEffect(() => {
     const fetchUpcomingEvents = async () => {
       try {
-        const response = await axios.get('/api/events', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/events`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         // Filter to show events that start from the current time onward

@@ -15,7 +15,7 @@ const CourseDetail = () => {
         const fetchMaterials = async () => {
             setLoading(true);  // Set loading to true before fetching
             try {
-                const response = await fetch(`/api/course/${courseId}/materials`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/course/${courseId}/materials`, {
                     headers: { 'Authorization': `Bearer ${user.token}` }
                 });
                 const json = await response.json();
@@ -48,7 +48,7 @@ const CourseDetail = () => {
         formData.append('description', description);
 
         try {
-            const response = await fetch(`/api/course/${courseId}/materials`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/course/${courseId}/materials`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
@@ -74,7 +74,7 @@ const CourseDetail = () => {
     const handleDeleteMaterial = async (materialId) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this material?');
         if (confirmDelete) {
-            const response = await fetch(`/api/course/${courseId}/materials/${materialId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/course/${courseId}/materials/${materialId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`,

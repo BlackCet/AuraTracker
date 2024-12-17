@@ -10,7 +10,7 @@ export const useGoogleSignIn = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch('/api/auth/google/callback', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/google/callback`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: tokenId }), // Sending token to the backend

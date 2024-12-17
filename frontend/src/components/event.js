@@ -25,7 +25,7 @@ const Event = () => {
       }
 
       try {
-        const response = await axios.get('/api/events', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/events`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -85,14 +85,14 @@ const Event = () => {
 
     try {
       if (currentEvent.id) {
-        const res = await axios.patch(`/api/events/${currentEvent.id}`, newEvent, {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/events/${currentEvent.id}`, newEvent, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         });
         dispatch({ type: 'UPDATE_EVENT', payload: res.data }); // Update state immediately
       } else {
-        const res = await axios.post('/api/events', newEvent, {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/events`, newEvent, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -109,7 +109,7 @@ const Event = () => {
   const handleEventDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       try {
-        await axios.delete(`/api/events/${id}`, {
+        await axios.delete(`${process.env.REACT_APP_API_URL}/api/events/${id}`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

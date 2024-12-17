@@ -13,7 +13,7 @@ const Assignments = () => {
 
     useEffect(() => {
         const fetchAssignments = async () => { 
-            const response = await fetch('/api/assignments', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/assignments`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 } 

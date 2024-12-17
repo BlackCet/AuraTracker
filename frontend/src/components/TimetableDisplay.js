@@ -9,7 +9,7 @@ const TimetableDisplay = () => {
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
-        const response = await fetch('/api/timetables', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         const data = await response.json();

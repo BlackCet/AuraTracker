@@ -19,7 +19,7 @@ const AssignmentDetails = ({ assignment }) => {
         if (!user) return;
 
         try {
-            const response = await fetch(`/api/assignments/${assignment._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/assignments/${assignment._id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${user.token}` },
             });
@@ -43,7 +43,7 @@ const AssignmentDetails = ({ assignment }) => {
         const updatedAssignment = { ...assignment, completed: !assignment.completed };
 
         try {
-            const response = await fetch(`/api/assignments/${assignment._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/assignments/${assignment._id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(updatedAssignment),
                 headers: {
@@ -58,7 +58,7 @@ const AssignmentDetails = ({ assignment }) => {
                 dispatch({ type: 'UPDATE_ASSIGNMENT', payload: json });
 
                 // Fetch updated user data
-                const userResponse = await fetch('/api/user/me', {
+                const userResponse = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
                     headers: { 'Authorization': `Bearer ${user.token}` },
                 });
                 const userData = await userResponse.json();
@@ -105,7 +105,7 @@ const AssignmentDetails = ({ assignment }) => {
         const updatedAssignment = { title, description, deadline, completed: assignment.completed };
 
         try {
-            const response = await fetch(`/api/assignments/${assignment._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/assignments/${assignment._id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(updatedAssignment),
                 headers: {

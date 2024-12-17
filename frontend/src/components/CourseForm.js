@@ -27,7 +27,7 @@ const CourseForm = () => {
         const course = { name, units, creditScore };
 
         try {
-            const response = await fetch('/api/course', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/course`, {
                 method: 'POST',
                 body: JSON.stringify(course),
                 headers: {
