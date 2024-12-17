@@ -40,9 +40,9 @@ function App() {
             <Route path="/schedule" element={user ? <Events/> : <Navigate to="/login" />} />
             <Route path="/leaderboard" element={user ? <Leaderboard/> : <Navigate to="/login" />} />
             <Route path="/timetable" element={user ? <Timetablee/> : <Navigate to="/login" />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/about" element={<About />}/>
+            <Route path="/team" element={<Team />}/>
+            <Route path="/analytics" element={user ? <Analytics/>: <Navigate to="/login" />} />
             <Route path="/course/:courseId" element={<CourseDetailsPage />} />
             <Route path="/goals" element={user ? <Goals/> : <Navigate to="/login" /> } />
             <Route path="/studyroom" element={user ? <Timer />: <Navigate to="/login" />} />

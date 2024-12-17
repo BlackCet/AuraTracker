@@ -20,7 +20,7 @@ root.render(
     <EventContextProvider>
     <TimetableContextProvider>
     <GoalsContextProvider>
-    <GoogleOAuthProvider clientId="646626177801-4g39k4q77ip2oe1hdamdfqijkbgmmfor.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <App />
     </GoogleOAuthProvider>
     </GoalsContextProvider>
