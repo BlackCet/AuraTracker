@@ -87,7 +87,7 @@ const updateAssignment = async (req, res) => {
             // Increment user points if the assignment was not previously completed
             await User.findByIdAndUpdate(
                 req.user._id,
-                { $inc: { points: 10 } }, // Increment points by 10
+                { $inc: { points: 10, assignmentsCompleted:1 } }, // Increment points by 10
                 { new: true }
             );
         }
