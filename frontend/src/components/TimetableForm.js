@@ -28,7 +28,7 @@ const TimetableForm = () => {
       setError(''); // Clear previous errors
   
       const response = await fetch('/api/timetables', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${user.token}`,
@@ -37,14 +37,15 @@ const TimetableForm = () => {
       });
   
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error saving timetable:", errorData);
+        const errorText = await response.text(); // Read error response as text
+        console.error("Error saving timetable:", errorText);
         setError("Failed to save timetable.");
       } else {
         alert("Timetable saved successfully.");
         const updatedData = await response.json();
         dispatch({ type: 'SET_TIMETABLE', payload: updatedData });
       }
+      
     } catch (error) {
       console.error("Error saving timetable:", error);
       setError("Failed to save timetable.");
