@@ -8,21 +8,33 @@ const TimetableDisplay = () => {
 
   useEffect(() => {
     const fetchTimetable = async () => {
+      if (!user || !user.token) {
+        console.error('User not authenticated');
+        return;
+      }
+  
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch timetable');
+        }
+  
         const data = await response.json();
         dispatch({ type: 'SET_TIMETABLE', payload: data });
+        localStorage.setItem('timetable', JSON.stringify(data)); // Sync localStorage
       } catch (error) {
         console.error('Error fetching timetable:', error);
       }
     };
-
+  
     if (user && user.token) {
       fetchTimetable();
     }
   }, [dispatch, user]);
+  
 
   return (
     <div className="container mx-auto mt-10 p-4">

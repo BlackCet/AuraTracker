@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const timetableSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
   },
   monday: { type: [String], default: [], validate: [arrayLimit, '{PATH} exceeds the limit of 5'] },
   tuesday: { type: [String], default: [], validate: [arrayLimit, '{PATH} exceeds the limit of 5'] },

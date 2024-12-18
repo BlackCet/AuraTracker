@@ -17,42 +17,48 @@ const TimetableForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    if (!user || !user._id) {
+      setError('User not authenticated');
+      return;
+    }
+  
     const dataToSubmit = {
       ...formData,
-      user_id: user._id, // Use user_id here to match the backend
+      user_id: user._id,
     };
   
     try {
-      setLoading(true); // Set loading state to true
-      setError(''); // Clear previous errors
+      setLoading(true);
+      setError('');
   
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(dataToSubmit),
       });
   
       if (!response.ok) {
-        const errorText = await response.text(); // Read error response as text
-        console.error("Error saving timetable:", errorText);
-        setError("Failed to save timetable.");
-      } else {
-        alert("Timetable saved successfully.");
-        const updatedData = await response.json();
-        dispatch({ type: 'SET_TIMETABLE', payload: updatedData });
+        const errorText = await response.text();
+        setError(`Failed to save timetable: ${errorText}`);
+        return;
       }
-      
+  
+      const updatedData = await response.json();
+      alert('Timetable saved successfully.');
+      dispatch({ type: 'SET_TIMETABLE', payload: updatedData });
+      localStorage.setItem('timetable', JSON.stringify(updatedData)); // Sync localStorage
     } catch (error) {
-      console.error("Error saving timetable:", error);
-      setError("Failed to save timetable.");
+      setError('Error saving timetable.');
+      console.error('Error:', error);
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
+  
 
   return (
     <div className="container mx-auto mt-10 p-4">

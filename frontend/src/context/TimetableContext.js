@@ -39,29 +39,29 @@ export const TimetableContextProvider = ({ children }) => {
 
   // Fetch timetable from localStorage or server
   useEffect(() => {
-    const savedTimetable = localStorage.getItem('timetable');
-    if (savedTimetable) {
-      dispatch({
-        type: 'SET_TIMETABLE',
-        payload: JSON.parse(savedTimetable),
-      });
-    } else {
-      // Fetch timetable from API if not found in localStorage
-      const fetchTimetable = async () => {
-        try {
+    const fetchTimetable = async () => {
+      try {
+        const savedTimetable = localStorage.getItem('timetable');
+        if (savedTimetable) {
+          dispatch({
+            type: 'SET_TIMETABLE',
+            payload: JSON.parse(savedTimetable),
+          });
+        } else {
           const response = await fetch(`${process.env.REACT_APP_API_URL}/api/timetables`);
+          if (!response.ok) throw new Error('Failed to fetch timetable');
           const data = await response.json();
           dispatch({ type: 'SET_TIMETABLE', payload: data });
-          // Save the timetable in localStorage
           localStorage.setItem('timetable', JSON.stringify(data));
-        } catch (error) {
-          console.error('Error fetching timetable:', error);
         }
-      };
-      fetchTimetable();
-    }
+      } catch (error) {
+        console.error('Error fetching timetable:', error);
+      }
+    };
+  
+    fetchTimetable();
   }, []);
-
+  
   return (
     <TimetableContext.Provider value={{ ...state, dispatch }}>
       {children}
