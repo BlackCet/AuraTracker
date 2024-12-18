@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("${process.env.REACT_APP_API_URL}/api/user/me", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
