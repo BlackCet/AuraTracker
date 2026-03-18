@@ -11,3 +11,5 @@ Track your classes, assignments, deadlines, study goals, schedules, and more. Th
 - **React**
 - **Node.js**
 
+## The website is live at: https://campusify-auratracker.onrender.com/login
+
