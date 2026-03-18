@@ -25,6 +25,14 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
+  "overrides": {
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
+    "serialize-javascript": "^6.0.2",
+    "webpack-dev-server": "^4.15.2",
+    "@tootallnate/once": "^2.0.0",
+    "underscore": "^1.13.7"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
