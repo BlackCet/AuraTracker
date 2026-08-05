@@ -13,3 +13,5 @@ Track your classes, assignments, deadlines, study goals, schedules, and more. Th
 
 ## The website is live at: https://campusify-auratracker.onrender.com/login
 
+## Checkout the demo video here : https://www.youtube.com/watch?v=XRQC02zLPCM
+
